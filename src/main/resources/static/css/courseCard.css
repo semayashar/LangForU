@@ -1,0 +1,77 @@
+/* General wrapper styles */
+.content-wrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Style for the course details section */
+.course-info-section {
+    background: linear-gradient(0deg, #4255A4, #b976f7);
+    padding: 2% 5%; /* Adjust padding to fit content */
+    display: flex;
+    justify-content: center;
+}
+
+.course-info-section .content-wrapper {
+    position: relative;
+    background: rgb(255 255 255 / 74%); /* Transparent background */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 15px; /* Soft edges */
+    padding: 20px; /* Reduced padding */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: auto; /* Auto width to fit content */
+}
+
+/* Grid layout for course attributes */
+.course-details p {
+    display: grid;
+    grid-template-columns: 260px 300px; /* Auto width columns to fit content */
+    margin-bottom: 10px;
+    color: #333; /* Text color */
+    align-items: baseline;
+    justify-items: start;
+}
+
+/* Attribute labels on the left */
+.course-details p .attribute-label {
+    font-weight: bold;
+    color: #555;
+    text-align: right;
+    padding-right: 15px;
+}
+
+/* Information on the right */
+.course-details p .attribute-value {
+    text-align: left;
+}
+
+/* Style for the course title */
+.course-info-section .course-title {
+    text-decoration: underline;
+    font-size: 24px;
+    margin-bottom: 40px; /* Adjusted spacing */
+    color: #333;
+    text-align: center; /* Center the title */
+}
+
+/* Styles for additional content sections */
+.additional-content {
+    padding: 50px 0;
+}
+
+.top-divider-section {
+    border-top: 1px solid #ddd;
+    padding-top: 30px;
+}
+
+.single-definition h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.single-definition p {
+    font-size: 16px;
+    color: #777;
+}

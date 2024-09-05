@@ -1,0 +1,268 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Регистрация</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/animated-headline.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #2196F3;
+            color: white;
+            margin-top: 20px;
+            display: none; /* Hidden by default, will be shown when needed */
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="fragments/navigation"></header>
+
+<main>
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s"><span th:text="${lection.name}"></span></h1>
+                                <h2 data-animation="bounceIn" data-delay="0.2s" class="" style="font-family: 'Mulish';color: white;animation-delay: 0.2s;"><span th:text="${lection.theme}"></span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container box_1170 about-area1 fix pt-10">
+        <div class="support-wrapper align-items-center" style="margin-top: 50px;">
+            <div class="left-content1" style="padding-left: 0px;">
+                <div class="section-tittle section-tittle2 mb-55">
+                <h3 class="text-heading">Видео Урок</h3>
+                <div class="single-features">
+                    <div class="features-icon">
+                        <img src="assets/img/icon/right-icon.svg" alt="">
+                    </div>
+                    <div class="features-caption">
+                        <p><span th:text="${lection.instructor}"></span></p>
+                    </div>
+                </div>
+                <div class="single-features">
+                    <div class="features-icon">
+                        <img src="assets/img/icon/right-icon.svg" alt="">
+                    </div>
+                    <div class="features-caption">
+                        <p><span th:text="${lection.difficultyLevel}"></span></p>
+                        <p><span th:text="${lection.viewCount}"></span></p>
+                    </div>
+                </div>
+                    <div class="single-features">
+                        <div class="features-icon">
+                            <img src="assets/img/icon/right-icon.svg" alt="">
+                        </div>
+                        <div class="features-caption">
+                            <p><span th:text="${lection.additionalResources}"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="right-content1" style="max-width: 500px;background: #bd72f726;min-height: 260px;margin-right: 0px;position: relative;">
+                <div class="right-img">
+                    <!-- Embedded Video -->
+                    <!-- Play Button Overlay -->
+                    <div class="video-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <a class="popup-video btn-icon" th:href="@{${lection.videoUrl}}">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <section class="sample-text-area">
+            <div class="container box_1170">
+                <h3 class="text-heading">Резюме</h3>
+                <p class="sample-text">
+                    <span th:text="${lection.summary}"></span>
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <section>
+        <div class="container box_1170">
+            <h3 class="text-heading">Упражнение</h3>
+            <form id="quizForm">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="lectionId" th:value="${lection.id}"/>
+
+                <!-- Iterate over exercises -->
+                <div th:each="exercise, iter : ${lection.exercises}">
+                    <!-- Check if the exercise is open-ended -->
+                    <div th:if="${exercise.possibleAnswers == null}">
+                        <label th:text="${exercise.question}"></label>
+                        <input type="text" th:name="'exercise_' + ${exercise.id}" placeholder="Your Answer"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Answer'"
+                               required class="single-input">
+                        <div class="incorrect" th:id="'error_' + ${exercise.id}" style="display: none;"></div>
+                    </div>
+                    <!-- Check if the exercise is multiple-choice -->
+                    <div th:if="${exercise.possibleAnswers != null}">
+                        <label th:text="${exercise.question}"></label>
+                        <div th:each="answer : ${exercise.possibleAnswers}">
+                            <div class="switch-wrap d-flex align-items-center" style="align-items: baseline;">
+                                <div class="primary-radio mr-2">
+                                    <input type="radio" th:id="'radio_' + ${iter.index} + '_' + ${answer}"
+                                           th:name="'exercise_' + ${exercise.id}" th:value="${answer}">
+                                    <label th:for="'radio_' + ${iter.index} + '_' + ${answer}"></label>
+                                </div>
+                                <p style="margin: 1px;" th:text="${answer}"></p>
+                            </div>
+                        </div>
+                        <div class="incorrect" th:id="'error_' + ${exercise.id}" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 40px;">Проверка</button>
+            </form>
+
+            <!-- Alert element -->
+            <div id="customAlert" class="alert" style="display: none; margin-bottom: 40px;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong>Result:</strong> <span id="resultText"></span>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('quizForm');
+        const customAlert = document.getElementById('customAlert');
+        const resultText = document.getElementById('resultText');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object to easily retrieve form values
+            const formData = new FormData(form);
+
+            // Clear previous error messages
+            document.querySelectorAll('.incorrect').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+
+            // Hide the custom alert initially
+            customAlert.style.display = 'none';
+
+            // Send form data using fetch API
+            fetch('/lections/submit', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let correctAnswers = 0;
+
+                // Process the response from the server
+                data.forEach(exercise => {
+                    if (exercise.answeredCorrectly) {
+                        correctAnswers++;
+                    } else {
+                        // Display "incorrect answer" message
+                        const errorElement = document.getElementById('error_' + exercise.id);
+                        if (errorElement) {
+                            errorElement.textContent = 'Incorrect answer';
+                            errorElement.style.display = 'block'; // Show the error message
+                        }
+                    }
+                });
+
+                // Update the result text and show the alert
+                resultText.textContent = `You answered ${correctAnswers} out of ${data.length} correctly.`;
+                customAlert.style.display = 'block'; // Show the result alert
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+    </script>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+</body>
+</html>

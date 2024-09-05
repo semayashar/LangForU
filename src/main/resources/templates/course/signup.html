@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Потребители</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/custom-images.css">
+    <link rel="stylesheet" href="/css/hamburgers.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="fragments/navigation"></header>
+
+<main id="main-content" style="display: none;">
+    <section class="sample-text-area">
+        <div class="container box_1170">
+            <h1>Запиши се на курс</h1>
+            <!-- Display messages if any (hidden for JS to handle) -->
+            <div th:if="${message}" style="display: none;" id="message" th:text="${message}"></div>
+            <div th:if="${error}" style="display: none;" id="error" th:text="${error}"></div>
+
+            <!-- Form for signing up -->
+            <form th:action="@{/courses/signup/{id}(id=${course.id})}" method="post">
+                <input type="hidden" name="courseId" th:value="${course.id}" />
+
+                <div class="form-group">
+                    <label for="pin">ЕГН:</label>
+                    <input type="text" id="pin" name="pin" th:value="${pin}" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Аз съм:</label><br />
+                    <input type="radio" id="bulgarianCitizen" name="citizenship" value="Български гражданин" required />
+                    <label for="bulgarianCitizen">Български гражданин</label><br />
+                    <input type="radio" id="foreigner" name="citizenship" value="Чужденец" required />
+                    <label for="foreigner">Чужденец</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" id="acceptPolicy" name="acceptPolicy" required />
+                    <label for="acceptPolicy">Приемам условията за обучения и приложените заявления.</label>
+                </div>
+                <p style="color: gray;">Личните данни се изискват по ЗПОО и действащите наредби на МОН и се обработват според GDPR политиките на LangForU ЦПО</p>
+
+                <button type="submit" class="btn btn4" id="signupButton">Запиши се</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script>
+    // When the DOM is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        var preloader = document.getElementById('preloader-active');
+        var mainContent = document.getElementById('main-content');
+        var message = document.getElementById('message');
+        var error = document.getElementById('error');
+
+        // Hide the preloader
+        preloader.style.display = 'none';
+        // Show the main content
+        mainContent.style.display = 'block';
+
+        // Check if there are any messages to display
+        if (message && message.textContent.trim()) {
+            alert(message.textContent); // Display success message
+        }
+
+        if (error && error.textContent.trim()) {
+            alert(error.textContent); // Display error message
+        }
+    });
+</script>
+<!-- Footer -->
+<div th:replace="fragments/footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+</body>
+</html>

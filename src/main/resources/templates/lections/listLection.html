@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Потребители</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/custom-images.css">
+    <link rel="stylesheet" href="/css/hamburgers.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="fragments/navigation"></header>
+
+<main>
+    <!--? Start Align Area -->
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">App Users</h3>
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Урок</th>
+                            <th>Тема</th>
+                            <th>Инструктор</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lection : ${lections}">
+                            <td th:text="${lection.name}"></td>
+                            <td th:text="${lection.theme}"></td>
+                            <td th:text="${lection.instructor}"></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/lections/{id}(id=${lection.id})}">Преглед</a>
+                                <a class="btn btn-primary" th:href="@{/lections/edit/{id}(id=${lection.id})}">Редакция</a>
+                                <a class="btn btn-primary" th:href="@{/lections/delete/{id}(id=${lection.id})}">Изтриване</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!-- Footer -->
+<div th:replace="fragments/footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+
+
+</body>
+</html>

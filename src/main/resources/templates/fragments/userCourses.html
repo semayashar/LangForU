@@ -1,0 +1,17 @@
+<div class="section-top-border" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h3 class="mb-30">Курсове</h3>
+    <div class="row">
+        <div class="col-md-4" th:each="course : ${user.courses}">
+            <div class="single-defination custom-card">
+                <h4 class="mb-20 custom-title"><span th:text="${course.language}"> </span></h4>
+                <p class="custom-text">Ниво: <span th:text="${course.level}"> </span></p>
+                <p class="custom-text">Описание: <span th:text="${course.description}"> </span></p>
+                <p class="custom-text">Начална дата: <span th:text="${course.startDate}"> </span></p>
+                <p class="custom-text">Крайна дата: <span th:text="${course.endDate}"> </span></p>
+
+                <!-- Existing Select Button -->
+                <a th:href="@{/courses/course/details/{id}(id=${course.id})}" class="genric-btn info custom-button">Избери</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Потребители</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/custom-images.css">
+    <link rel="stylesheet" href="/css/hamburgers.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="fragments/navigation"></header>
+
+<main>
+    <section class="sample-text-area">
+        <div class="container box_1170">
+            <h3 class="mb-30">Информация за потребител</h3>
+            <p class="sample-text">
+                <strong>Имена:</strong>             <span th:text="${user.name}"></span><br>
+                <strong>Пол:</strong>               <span th:text="${user.gender}"></span><br>
+                <strong>Дата на раждане:</strong>   <span th:text="${user.dateOfBirth}"></span><br>
+                <strong>Адрес:</strong>             <span th:text="${user.address}"></span><br>
+                <strong>Имейл:</strong>             <span th:text="${user.email}"></span><br>
+                <strong>Телефонен номер:</strong>   <span th:text="${user.phoneNumber}"></span><br>
+                <strong>Активен:</strong>           <span th:text="${user.locked}"></span><br>
+                <strong>Роля:</strong>              <span th:text="${user.appUserRole}"></span><br>
+
+                <a th:href="@{/admin/deleteUser/{id}(id=${user.id})}" class="genric-btn danger-border">Премахни потребител</a>
+                <a th:href="@{/admin/sendUserAdminRequest/{id}(id=${user.id})}" class="genric-btn info-border">Изпрати заявка за 'АДМИН'</a>
+            </p>
+        </div>
+    </section>
+
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">Записани курсове</h3>
+                <div class="row" style="align-items: flex-end;">
+                    <!-- Iterate over each course in the user's courses list -->
+                    <div th:each="course : ${user.courses}" class="col-md-4">
+                        <div class="single-defination">
+                            <!-- Display course language if it exists -->
+                            <li class="mb-20 custom-title">Курс:
+                                <span th:text="${course.language ?: 'Not specified'}"></span>
+                            </li>
+                            <!-- Display course level if it exists -->
+                            <ol class="custom-text">Ниво:
+                                <span th:text="${course.level ?: 'Not specified'}"></span>
+                            </ol>
+                            <!-- Display course start date if it exists -->
+                            <ol class="custom-text">Начална дата:
+                                <span th:text="${course.startDate ?: 'Not specified'}"></span>
+                            </ol>
+                            <!-- Display course end date if it exists -->
+                            <ol class="custom-text">Крайна дата:
+                                <span th:text="${course.endDate ?: 'Not specified'}"></span>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- If no courses are available, show a message -->
+                <div th:if="${#lists.isEmpty(user.courses)}">
+                    <p>Няма записани курсове.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!-- Footer -->
+<div th:replace="fragments/footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+
+
+</body>
+</html>

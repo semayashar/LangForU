@@ -1,0 +1,63 @@
+<header xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <!-- Header Start -->
+    <div class="header-area header-linear-gradient">
+        <div class="main-header">
+            <div class="header-bottom header-sticky">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="logo">
+                                <a th:action="@{/index}"><img src="/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10">
+                            <div class="menu-wrapper d-flex align-items-center justify-content-end">
+                                <!-- Main-menu -->
+                                <div class="main-menu d-none d-lg-block">
+                                    <ul id="navigation">
+                                        <li class="active"><a th:href="@{/index}">Начало</a></li>
+                                        <li><a th:href="@{/courses}">Курсове</a></li>
+                                        <li><a th:href="@{/about}">За нас</a></li>
+                                        <li><a th:href="@{/blog}">Блог</a></li>
+                                        <li><a th:href="@{/contact}">Контакт</a></li>
+                                        <li sec:authorize="isAuthenticated()"><a th:href="@{/profile}">Профил</a></li>
+
+                                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/users}">Таблици</a>
+                                            <ul class="submenu">
+                                                <li><a th:href="@{/admin/users}">Регистирани потребители</a></li>
+                                                <li><a th:href="@{/admin/unconfirmed-users}">Изчакващи потребители</a></li>
+                                                <li><a th:href="@{/lections}">Лекции</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/courses}">Добави</a>
+                                            <ul class="submenu">
+                                                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/courses/add}">Добави курс</a></li>
+                                                <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/lections/add}">Добави лекция</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li sec:authorize="isAnonymous()"><a th:href="@{/login}" class="btn btn3">Вход</a></li>
+                                        <li sec:authorize="isAnonymous()"><a th:href="@{/register}" class="btn btn4">Регистрация</a> </li>
+
+                                        <li sec:authorize="isAuthenticated()">
+                                            <form th:action="@{/logout}" method="post" style="all: unset;">
+                                                <button type="submit" class="btn btn3">Изход</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Влез в профил</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/animated-headline.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/login-register.css">
+</head>
+
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+
+<header th:replace="fragments/navigation"></header>
+
+
+<main>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form th:action="@{/login}" method="post">
+    <h3>Влез в профил</h3>
+
+    <label for="email">Имейл</label>
+    <input type="text" placeholder="Напиши имейл тук" id="email" name="email" required="required">
+
+    <label for="password">Парола</label>
+    <input type="password" placeholder="Напиши парола тук" id="password" name="password" required="required" />
+
+    <button class="genric-btn primary" type="submit" style="margin: 10px;justify-self: center;grid-column: span 2;">Влез в профила</button>
+
+    <div class="question">
+        <p>Нямаш профил?
+        <a th:href="@{/register}"> Регистрирайте се сега!</a>
+        </p>
+    </div>
+</form>
+<div th:if="${error}" class="error">
+    <p th:text="${error}">Грешен имейл или парола. Моля, опитайте отново!</p>
+</div>
+</main>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+
+</body>
+</html>

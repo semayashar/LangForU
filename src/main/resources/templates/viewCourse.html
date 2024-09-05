@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Courses | Education</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+
+  <!-- CSS here -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/slicknav.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/progressbar_barfiller.css">
+  <link rel="stylesheet" href="/css/gijgo.css">
+  <link rel="stylesheet" href="/css/animate.min.css">
+  <link rel="stylesheet" href="/css/animated-headline.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/css/themify-icons.css">
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/nice-select.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/courseCard.css">
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+  <div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader-inner position-relative">
+      <div class="preloader-circle"></div>
+      <div class="preloader-img pere-text">
+        <img src="/img/logo/loder.png" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="fragments/navigation"></header>
+
+<main>
+  <section class="course-info-section">
+    <div class="content-wrapper">
+      <h3 class="course-title"><span th:text="${course.language}"></span></h3>
+      <div class="course-details">
+        <p><span class="attribute-label">Ниво:</span> <span class="attribute-value" th:text="${course.level}"></span></p>
+        <p><span class="attribute-label">Цена:</span> <span class="attribute-value" th:text="${course.price}"></span></p>
+        <p><span class="attribute-label">Начална дата:</span> <span class="attribute-value" th:text="${course.startDate}"></span></p>
+        <p><span class="attribute-label">Крайна дата:</span> <span class="attribute-value" th:text="${course.endDate}"></span></p>
+        <p><span class="attribute-label">Продължителност в седмици:</span> <span class="attribute-value" th:text="${course.getDuration()}"></span></p>
+        <p><span class="attribute-label">Описание:</span> <span class="attribute-value" th:text="${course.description}"></span></p>
+        <p><span class="attribute-label">Основен лектор:</span> <span class="attribute-value" th:text="${course.mainInstructorName}"></span></p>
+        <p><span class="attribute-label">Втори лектор:</span> <span class="attribute-value" th:text="${course.assistantInstructorName}"></span></p>
+      </div>
+      <div th:if="${error != null}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+      </div>
+      <div th:if="${message != null}" class="alert alert-success">
+        <p th:text="${message}"></p>
+      </div>
+      <a sec:authorize="hasAuthority('USER')" th:href="@{/courses/signup/{id}(id=${course.id})}" class="btn btn-primary">Запиши се</a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+  <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+
+</body>
+</html>

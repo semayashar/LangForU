@@ -1,0 +1,101 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Регистрация</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="@{/site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/animated-headline.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/login-register.css">
+</head>
+
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+
+<header th:replace="fragments/navigation"></header>
+
+
+<main>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+    <form th:action="@{/register}" method="post" th:object="${registrationRequest}">
+
+        <h3>Регистрация</h3>
+
+        <label for="email">Имейл:</label>
+        <input placeholder="Напиши имейл тук" type="email" id="email" th:field="*{email}" required="required" />
+
+        <label for="password">Парола:</label>
+        <input placeholder="Напиши парола тук" type="password" id="password" th:field="*{password}" required="required" />
+
+        <label for="name">Имена:</label>
+        <input placeholder="Напиши имена тук" type="text" id="name" th:field="*{name}" required="required" />
+
+        <label for="dateOfBirth">Дата на раждане:</label>
+        <input placeholder="Въведи дата на раждане тук" type="date" id="dateOfBirth" th:field="*{dateOfBirth}" required="required" />
+
+
+        <label for="gender">Пол:</label>
+        <div class="default-select" id="default-select">
+            <select placeholder="Въведи пол тук" id="gender" th:field="*{gender}">
+                <option value="male">Мъжки</option>
+                <option value="female">Женски</option>
+            </select>
+        </div>
+
+        <label for="address">Адрес:</label>
+        <input placeholder="Напиши адрес тук" type="text" id="address" th:field="*{address}" />
+
+        <label for="phoneNumber">Телефонен номер:</label>
+        <input placeholder="Напиши телефонен номер тук" type="tel" id="phoneNumber" th:field="*{phoneNumber}" />
+
+        <button class="genric-btn primary" type="submit" style="margin: 10px;justify-self: center;grid-column: span 2;">Регистрация</button>
+        <div class="question">
+            <p>Имаш профил?
+                <a th:href="@{/login}"> Влез сега!</a>
+            </p>
+        </div>
+    </form>
+</main>
+
+<!-- JS here -->
+<script th:replace="fragments/script"></script>
+
+</body>
+</html>

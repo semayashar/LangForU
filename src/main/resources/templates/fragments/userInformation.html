@@ -1,0 +1,17 @@
+<!--? Start Sample Area -->
+<section class="sample-text-area"  xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container box_1170">
+        <h3 class="text-heading">Информация на потребител</h3>
+        <p class="sample-text">
+            Имена: <span th:text="${user.name}"></span><br>
+            Пол:  <span th:text="${user.gender}"></span><br>
+            Дата на раждане: <span th:text="${user.dateOfBirth}"></span> <br>
+            Адрес:  <span th:text="${user.address}"></span><br>
+            Имейл: <span th:text="${user.email}"></span><br>
+            Телефонен номер: <span th:text="${user.phoneNumber}"></span><br>
+            Активен: <span th:text="${user.locked}"></span><br>
+            Роля: <span th:text="${user.appUserRole}"></span><br>
+        </p>
+    </div>
+</section>
+
