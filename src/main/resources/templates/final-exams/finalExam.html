@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Финален Изпит</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/logo/logo.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="/css/gijgo.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/animated-headline.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder_black.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!--? Slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s"><span th:text="${finalExam.name}"></span></h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#"><span th:text="${finalExam.course.language}"></span></a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--? Slider Area End-->
+
+    <!-- Детайли за изпита -->
+    <section class="container box_1170 pt-10 mt-30">
+        <h3 class="text-heading">Детайли за изпита</h3>
+        <p>Продължителност: <span th:text="${finalExam.duration} + ' минути'"></span></p>
+        <p>Курс: <span th:text="${finalExam.course.language}"></span></p>
+        <p>Дата: <span th:text="${#temporals.format(finalExam.examDate, 'dd.MM.yyyy')}"></span></p>
+    </section>
+
+
+    <!-- Формуляр за изпита -->
+    <section class="container box_1170 pt-10">
+        <h3 class="text-heading">Финален тест</h3>
+        <form id="examForm" method="post" th:action="@{'/final-exams/submit/' + ${finalExam.id}}">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" name="examId" th:value="${finalExam.id}"/>
+
+            <div th:each="question : ${finalExam.examQuestions}">
+                <!-- Отворен въпрос -->
+                <div th:if="${#lists.isEmpty(question.possibleAnswers)}" class="mb-5">
+                    <strong th:text="${question.question}"></strong>
+                    <input type="text" th:name="'question_' + ${question.id}" placeholder="Въведете Вашия отговор"
+                           required class="single-input mt-2"/>
+                </div>
+
+                <!-- Затворен въпрос -->
+                <div th:if="${!#lists.isEmpty(question.possibleAnswers)}" class="mb-5">
+                    <strong th:text="${question.question}"></strong>
+                    <div th:each="answer, iStat : ${question.possibleAnswers}"
+                         class="switch-wrap d-flex align-items-center mt-2">
+                        <div class="primary-radio mr-2">
+                            <input type="radio"
+                                   th:id="'radio_' + ${question.id} + '_' + ${iStat.index}"
+                                   th:name="'question_' + ${question.id}"
+                                   th:value="${answer}"
+                                   required/>
+                            <label th:for="'radio_' + ${question.id} + '_' + ${iStat.index}"></label>
+                        </div>
+                        <p th:text="${answer}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Есе -->
+            <div th:if="${!#lists.isEmpty(finalExam.essayTopic)}" class="mb-5">
+                <strong th:text="${finalExam.essayTopic}"></strong>
+                <textarea style="height: 350px;" name="essayAnswer" class="single-input mt-2" rows="6"
+                          required placeholder="Вашето есе тук..."></textarea>
+            </div>
+
+            <!-- Бутон за изпращане -->
+            <button type="submit" class="btn btn-primary mt-4 mb-5">Предай изпита</button>
+        </form>
+
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script>
+    function closeAssistantHelp(questionId) {
+    const responseBox = document.getElementById(`response_${questionId}`);
+    if (responseBox) {
+        responseBox.style.display = 'none'; // Hide the response box
+    }
+}
+</script>
+</body>
+</html>

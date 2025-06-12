@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Профил</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/slicknav.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/custom-images.css" rel="stylesheet">
+    <link href="css/hamburgers.min.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="css/themify-icons.css" rel="stylesheet">
+    <link href="css/slick.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/calendar.css" rel="stylesheet">
+    <script th:inline="javascript">
+        const lectionEvents =  [];
+    </script>
+
+    <!-- Inline CSS -->
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .avatar-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .avatar-item {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .avatar-item.selected {
+            border-color: #4CAF50;
+        }
+
+        .save-avatar-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .save-avatar-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<!-- Header -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!-- Profile Section -->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1>Здравей, <span th:text="${user.name}"></span></h1>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/profile}">Профил</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section th:replace="~{fragments/userInformation}"></section>
+
+    <div class="whole-wrap" sec:authorize="hasAuthority('ROLE_USER')">
+        <div class="container box_1170">
+
+            <!-- Singed Up Courses -->
+            <div th:replace="~{fragments/userCourses}"></div>
+
+            <!-- AI Assistant -->
+            <div class="section-top-border">
+                <h3 class="mb-30">Свържи се със своя AI асистент!</h3>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <blockquote class="generic-blockquote">
+                            Нека ти помогнем с твоето личностно развитие, като се упражняваш със нашата асистентка
+                            "Севи"!
+                        </blockquote>
+                        <a class="genric-btn info" sec:authorize="isAuthenticated()" th:href="@{/Sevi/chat}">Запознай се
+                            със Севи</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">Календар</h3>
+                <div class="container-cldr" sec:authorize="hasAuthority('ROLE_USER')">
+                    <div class="left">
+                        <div class="calendar">
+                            <div class="month">
+                                <i class="fas fa-angle-left prev"></i>
+                                <div class="date" style="font-weight: bold; font-size: xx-large;">Декември 2015</div>
+                                <i class="fas fa-angle-right next"></i>
+                            </div>
+                            <div class="weekdays">
+                                <div>Пон</div>
+                                <div>Вто</div>
+                                <div>Сря</div>
+                                <div>Чет</div>
+                                <div>Пет</div>
+                                <div>Съб</div>
+                                <div>Нед</div>
+                            </div>
+                            <div class="days"></div>
+                            <div class="goto-today">
+                                <div class="goto">
+                                    <input class="date-input" placeholder="мм/гггг" type="text">
+                                    <button class="goto-btn">Отиди</button>
+                                </div>
+                                <button class="today-btn">Днес</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="today-date">
+                            <div class="event-day">Сря</div>
+                            <div class="event-date">12-ти декември 2022</div>
+                        </div>
+                        <div class="events"></div>
+                        <div class="add-event-wrapper">
+                            <div class="add-event-header">
+                                <div class="title">Добави събитие</div>
+                                <i class="fas fa-times close"></i>
+                            </div>
+                            <div class="add-event-body">
+                                <div class="add-event-input">
+                                    <input class="event-name" placeholder="Име на събитието" type="text">
+                                </div>
+                                <div class="add-event-input">
+                                    <input class="event-time-from" placeholder="Час на започване" type="text">
+                                </div>
+                                <div class="add-event-input">
+                                    <input class="event-time-to" placeholder="Час на приключване" type="text">
+                                </div>
+                            </div>
+                            <div class="add-event-footer">
+                                <button class="add-event-btn">Добави събитие</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="add-event">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="js/other/calendar.js"></script>
+<script src="js/other/avatar.js"></script>
+
+</body>
+</html>

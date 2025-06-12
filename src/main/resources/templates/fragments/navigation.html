@@ -1,0 +1,100 @@
+<header id="header" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Header Start -->
+    <div class="header-area header-linear-gradient" id="header-area">
+        <div class="main-header" id="main-header">
+            <div class="header-bottom header-sticky" id="header-bottom">
+                <div class="container-fluid" id="container">
+                    <div class="row align-items-center" id="row">
+                        <!-- Logo -->
+                        <div class="col-xl-2 col-lg-2" id="logo-container">
+                            <div id="logo">
+                                <a id="logo-link" th:href="@{/index}">
+                                    <img alt="Logo" id="logo-img" src="/img/logo/logo.png">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10" id="menu-container">
+                            <div class="menu-wrapper d-flex align-items-center justify-content-end" id="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu d-none d-lg-block" id="main-menu">
+                                    <ul id="navigation">
+                                        <li class="active" id="nav-home"><a th:href="@{/index}">Начало</a></li>
+                                        <li id="nav-courses"><a th:href="@{/courses}">Курсове</a></li>
+                                        <li id="nav-about"><a th:href="@{/about}">За нас</a></li>
+                                        <li id="nav-sevi"><a th:href="@{/Sevi}">За Севи</a></li>
+                                        <li id="nav-blog"><a th:href="@{/blog}">Блог</a></li>
+                                        <li id="nav-contact"><a th:href="@{/contact}">Контакт</a></li>
+                                        <li id="nav-profile" sec:authorize="isAuthenticated()"><a th:href="@{/profile}">Профил</a>
+                                        </li>
+                                        <li id="nav-course-requests" sec:authorize="hasAuthority('ROLE_USER')"><a
+                                                th:href="@{/courses/requests}">Заявки за курсове</a></li>
+
+                                        <li id="nav-admin-users" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                            <a th:href="@{/admin/dashboard}">Потребители</a>
+                                            <ul class="submenu" id="submenu-users">
+                                                <li id="submenu-registered-users"><a th:href="@{/admin/users}">Регистирани
+                                                    потребители</a></li>
+                                                <li id="submenu-unconfirmed-users"><a
+                                                        th:href="@{/admin/unconfirmedUsers}">Заявки за курсове</a></li>
+                                                <li id="submenu-contact-requests"><a
+                                                        th:href="@{/admin/contactRequests}">Връзка с потребители</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li id="nav-admin-tables" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                            <a th:href="@{/admin/dashboard}">Таблици</a>
+                                            <ul class="submenu" id="submenu-tables">
+                                                <li id="submenu-blogs"><a th:href="@{/admin/blogs}">Блогове</a></li>
+                                                <li id="submenu-courses"><a th:href="@{/admin/courses}">Курсове</a></li>
+                                                <li id="submenu-final-exams"><a th:href="@{/admin/final-exams}">Финални
+                                                    изпити</a></li>
+                                                <li id="submenu-lections"><a th:href="@{/admin/lections}">Лекции</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li id="nav-admin-add" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                            <a th:href="@{/admin/dashboard}">Добави</a>
+                                            <ul class="submenu" id="submenu-add">
+                                                <li id="submenu-add-course" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                                    <a th:href="@{/courses/add}">Добави курс</a></li>
+                                                <li id="submenu-add-lection" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                                    <a th:href="@{/lections/add}">Добави лекция</a></li>
+                                                <li id="submenu-add-final-exams"
+                                                    sec:authorize="hasAuthority('ROLE_ADMIN')"><a
+                                                        th:href="@{/final-exams/add}">Добави финален изпит</a></li>
+                                                <li id="submenu-add-blog" sec:authorize="hasAuthority('ROLE_ADMIN')"><a
+                                                        th:href="@{/blog/add}">Добави блог</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li id="nav-login" sec:authorize="isAnonymous()"><a class="btn btn3"
+                                                                                            th:href="@{/login}">Вход</a>
+                                        </li>
+                                        <li id="nav-register" sec:authorize="isAnonymous()"><a class="btn btn4"
+                                                                                               style="border: 1px solid #7470d1;"
+                                                                                               th:href="@{/register}">Регистрация</a>
+                                        </li>
+
+                                        <li id="nav-logout" sec:authorize="isAuthenticated()">
+                                            <form id="logout-form" method="post" style="all: unset;"
+                                                  th:action="@{/logout}">
+                                                <button class="btn btn3" id="logout-button" type="submit">Изход</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12" id="mobile-menu-container">
+                            <div class="mobile_menu d-block d-lg-none" id="mobile-menu"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

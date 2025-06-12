@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Влез в профил</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="site.webmanifest" rel="manifest">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/slicknav.css" rel="stylesheet">
+    <link href="css/flaticon.css" rel="stylesheet">
+    <link href="css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="css/gijgo.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/animated-headline.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="css/themify-icons.css" rel="stylesheet">
+    <link href="css/slick.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="/css/login-register.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="form-wrapper">
+        <form id="loginForm" method="post" style="max-width: 400px;" th:action="@{/login}">
+            <h3>Влез в профил</h3>
+
+            <div class="form-row full-width">
+                <label for="email">Имейл</label>
+                <input id="email" name="email" placeholder="Напиши имейл тук" required="required" type="text">
+                <div class="error-container" id="email-error"></div>
+            </div>
+
+            <div class="form-row full-width">
+                <label for="password">Парола</label>
+                <input id="password" name="password" placeholder="Напиши парола тук" required="required"
+                       type="password"/>
+                <div class="error-container" id="password-error"></div>
+            </div>
+
+            <div class="form-row full-width">
+                <div th:if="${param.error}">
+                    <p style="font-size: 14px;font-weight: bold;margin-top: 5px;color: red;">Грешен имейл или парола.
+                        Моля, опитайте отново!</p>
+                </div>
+            </div>
+
+            <div class="form-row full-width">
+                <button class="genric-btn primary" style="margin: 10px;justify-self: center;grid-column: span 2;"
+                        type="submit">Влез в профила
+                </button>
+            </div>
+
+            <div class="form-row full-width">
+                <div class="question">
+                    <p style="font-size: medium; color: white;">Нямаш профил?
+                        <a href="/register" style="font-size: medium; color: #8264ee;"> Регистрирайте се сега!</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+<script src="/js/validations/login.js"></script>
+
+</body>
+</html>

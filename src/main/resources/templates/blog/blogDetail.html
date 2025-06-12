@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Блог</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="site.webmanifest" rel="manifest">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/flaticon.css" rel="stylesheet">
+    <link href="/css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="/css/gijgo.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/animated-headline.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!--? Slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s">Блогове</h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/blog}">Блог</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--? Slider Area End-->
+
+    <!--? Блог зона Начало -->
+    <section class="blog_area single-post-area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post">
+                        <!-- Снимка на блога -->
+                        <div class="feature-img">
+                            <img alt="Снимка на блога" class="img-fluid" th:src="@{${blog.image}}">
+                            <!-- Снимка на блога -->
+                        </div>
+                        <div class="blog_details">
+
+                            <!-- Заглавие на блога -->
+                            <h2 style="color: #2d2d2d;" th:text="${blog.name}"></h2>
+
+                            <!-- Категории и брой коментари -->
+                            <ul class="blog-info-link mt-3 mb-4">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-user"></i>
+                                        <span th:each="category : ${blog.categories}" th:text="${category}"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-comments"></i>
+                                        <span th:text="${blog.getCommentsCount()}"></span> Коментари
+                                    </a>
+                                </li>
+                                <!-- Like/Unlike Button-->
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-heart"></i>
+                                        <span th:text="${likesCount}"></span> Харесвания
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="like-btn"
+                                       href="#"
+                                       onclick="event.preventDefault(); document.getElementById('like-form-${blog.id}').submit();">
+                                        <span th:text="${isLikedByCurrentUser ? 'Unlike' : 'Like'}"></span>
+                                    </a>
+                                    <form id="like-form-${blog.id}" method="POST"
+                                          style="display:none;" th:action="@{/blog/{id}/like(id=${blog.id})}">
+                                        <input name="_csrf" th:value="${_csrf.token}" type="hidden"/>
+                                    </form>
+                                </li>
+                            </ul>
+                            <!-- Кратко обяснение на блога -->
+                            <p class="excert" th:text="${blog.blogText}"></p>
+                        </div>
+                    </div>
+
+                    <!-- Брой харесвания и коментари -->
+                    <div class="navigation-top">
+                        <div class="d-sm-flex justify-content-between text-center">
+                            <p class="like-info">
+                                <span class="align-middle"><i class="fa fa-heart"></i></span>
+                                <span th:text="${likesCount}"></span> души харесват това
+                            </p>
+                            <div class="col-sm-4 text-center my-2 my-sm-0">
+                                <p class="comment-count">
+                                    <span class="align-middle"><i class="fa fa-comment"></i></span>
+                                    <span th:text="${blog.getCommentsCount()}"></span> Коментари
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="navigation-area">
+                        <div class="row">
+                            <!-- Предишен блог -->
+                            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                                <div class="thumb">
+                                    <a th:href="@{/blog/detail/{id}(id=${previousBlog.id})}"
+                                       th:if="${previousBlog != null}">
+                                        <img alt="" class="img-fluid" th:src="@{/assets/img/post/preview.png}">
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a th:href="@{/blog/detail/{id}(id=${previousBlog.id})}"
+                                       th:if="${previousBlog != null}">
+                                        <span class="lnr text-white ti-arrow-left"></span>
+                                    </a>
+                                </div>
+                                <div class="detials" style="margin-left: 40px;">
+                                    <p th:if="${previousBlog != null}">Предишна публикация</p>
+                                    <a th:href="@{/blog/detail/{id}(id=${previousBlog.id})}"
+                                       th:if="${previousBlog != null}">
+                                        <h4 style="color: #2d2d2d;" th:text="${previousBlog.name}">Заглавие на предишния
+                                            блог</h4>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Следващ блог -->
+                            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                <div class="detials" style="margin-right: 40px;">
+                                    <p th:if="${nextBlog != null}">Следваща публикация</p>
+                                    <a th:href="@{/blog/detail/{id}(id=${nextBlog.id})}" th:if="${nextBlog != null}">
+                                        <h4 style="color: #2d2d2d;" th:text="${nextBlog.name}">Заглавие на следващия
+                                            блог</h4>
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a th:href="@{/blog/detail/{id}(id=${nextBlog.id})}" th:if="${nextBlog != null}">
+                                        <span class="lnr text-white ti-arrow-right"></span>
+                                    </a>
+                                </div>
+                                <div class="thumb">
+                                    <a th:href="@{/blog/detail/{id}(id=${nextBlog.id})}" th:if="${nextBlog != null}">
+                                        <img alt="" class="img-fluid" th:src="@{/assets/img/post/next.png}">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Автор -->
+                    <div class="blog-author">
+                        <div class="media align-items-center">
+                            <!-- Display the author's profile picture -->
+                            <img alt="Автор" th:src="@{${blog.author.profilePicture}}">
+                            <div class="media-body">
+                                <h4>Автор:</h4>
+                                <h4 th:text="${blog.author.name}"></h4> <!-- Author's name -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Секция за коментари -->
+                    <div class="comments-area">
+                        <h4 th:text="${blog.comments.size()} + ' Коментари'"></h4>
+                        <div class="comment-list" th:each="comment : ${blog.comments}">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <!-- Display the commenter's profile picture -->
+                                        <img alt="Коментатор"
+                                             th:src="@{${comment.user.profilePicture} != null ? ${comment.user.profilePicture} : '/img/avatars/user.png'}">
+
+                                    </div>
+                                    <div class="desc">
+                                        <p class="comment" th:text="${comment.commentText}"></p>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <h5 th:text="${comment.user.name}"></h5>
+                                                <p class="date"
+                                                   th:text="${#temporals.format(comment.commentedAt, 'dd-MM-yyyy')} + ' в ' + ${#temporals.format(comment.commentedAt, 'HH:mm')}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Форма за коментари -->
+                    <div class="comment-form">
+                        <h4>Остави коментар</h4>
+
+                        <!-- Проверка дали потребителят е влязъл -->
+                        <div th:if="${#authorization.expression('isAuthenticated()')}">
+                            <form class="form-contact comment_form"
+                                  id="commentForm"
+                                  method="POST" th:action="@{/blog/{id}/comment(id=${blog.id})}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                        <textarea class="form-control w-100"
+                                  cols="30" id="commentText"
+                                  name="commentText" placeholder="Напишете коментар" required rows="9"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="button button-contactForm btn_1 boxed-btn" type="submit">
+                                        Публикувай коментар
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Ако потребителят не е влязъл, показване на съобщение за вход -->
+                        <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                            <p style="color:red;">Моля, влезте, за да оставите коментар.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script>
+    function toggleLike(blogId) {
+    fetch(`/blog/${blogId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        const likeButton = document.getElementById("likeButton");
+        const likeCount = document.getElementById("likeCount");
+        const likeStatus = document.getElementById("likeStatus");
+
+        if (data.includes("Liked successfully")) {
+            likeStatus.innerText = "Unlike";
+            likeCount.innerText = parseInt(likeCount.innerText) + 1;
+        } else if (data.includes("Unliked successfully")) {
+            likeStatus.innerText = "Like";
+            likeCount.innerText = parseInt(likeCount.innerText) - 1;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+</script>
+</body>
+</html>

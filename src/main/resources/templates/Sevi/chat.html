@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Чат със Севи</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Виртуална асистентка за изучаване на езици." name="description">
+    <link href="/img/logo/logo.ico" rel="icon" type="image/x-icon">
+
+    <!-- CSS Libraries -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/flaticon.css" rel="stylesheet">
+    <link href="/css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="/css/gijgo.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/animated-headline.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link href="/css/style.css" rel="stylesheet">
+
+    <!-- FontAwesome Fallback -->
+    <noscript>
+        <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    </noscript>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        .chat-container {
+            margin: 5% auto;
+            width: 70%;
+            max-width: 800px;
+            height: 70vh;
+            border-radius: 12px;
+            background-color: #f9f9fb;
+            box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .chat-header {
+            padding: 15px;
+            background-color: #9f98f7;
+            color: #fff;
+            font-family: 'Mulish', sans-serif;
+            font-size: x-large;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-color: #ffffff;
+        }
+
+
+        .chat-message {
+            max-width: 80%;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .chat-bubble {
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            background-color: #f1f0ff;
+            color: #333;
+            word-wrap: break-word;
+        }
+
+
+        .user-message {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .user-message .chat-bubble {
+            background-color: #bebaf3;
+        }
+
+
+        .assistant-message .chat-bubble {
+            background-color: #e0e7ff;
+        }
+
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background-color: #aaa5ff;
+            border-top: 1px solid #ddd;
+            align-items: center;
+        }
+
+        textarea {
+            flex: 1;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            resize: none;
+            background-color: #ffffff;
+            margin-right: 10px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: #7672d4;
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #4642a3;
+        }
+
+        #new-chat-btn {
+            width: 100px;
+            margin-left: 10px;
+            background-color: #ff5c5c;
+            font-size: small;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #new-chat-btn:hover {
+            background-color: #d12b2b;
+        }
+
+
+        .loader {
+            width: 40px;
+            aspect-ratio: 1;
+            --_g: no-repeat radial-gradient(circle closest-side, #d3d3d3 90%, transparent);
+            background:
+                var(--_g) 0% 50%,
+                var(--_g) 50% 50%,
+                var(--_g) 100% 50%;
+            background-size: calc(100% / 3) 100%;
+            animation: l7 1s infinite linear;
+        }
+
+        @keyframes l7 {
+            33% { background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%; }
+            50% { background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%; }
+            66% { background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%; }
+        }
+
+        .no-js #preloader-active {
+            display: none;
+        }
+    </style>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const userAvatar = /*[[${userAvatar}]]*/ '/img/default-avatar.png'; // Използваме userAvatar от модела
+        /*]]>*/
+    </script>
+
+</head>
+
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1>Севи - Виртуална Асистентка</h1>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/index">Начало</a></li>
+                                        <li class="breadcrumb-item"><a href="/Sevi/chat">Севи</a></li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Area -->
+    <div aria-label="Chat with Sevi assistant" class="chat-container" role="main">
+        <div class="chat-header">Севи - Виртуална Асистентка</div>
+        <div aria-live="polite" aria-relevant="additions" class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <form aria-label="Send message form" id="chat-form"
+                  style="display: flex; width: 100%; align-items: center;">
+                <textarea aria-label="Chat input" id="userInput" placeholder="Напиши въпроса си тук..." required
+                          rows="1"></textarea>
+                <button aria-label="Send message" type="submit">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            <button aria-label="Start new chat" id="new-chat-btn">Нов Чат</button>
+        </div>
+    </div>
+</main>
+
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/assistant/chat.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+
+</body>
+</html>

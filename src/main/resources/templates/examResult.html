@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exam Results</title>
+</head>
+<body>
+<h1>Final Exam Results</h1>
+<p>Your score: <span th:text="${score}"></span></p>
+<p th:if="${passed}">You passed the exam!</p>
+<p th:if="${!passed}">You did not pass the exam.</p>
+</body>
+</html>

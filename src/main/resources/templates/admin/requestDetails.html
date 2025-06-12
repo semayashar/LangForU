@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Потребител</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+
+        .sample-text-area {
+            background-color: #f9f9ff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .sample-text-area h3 {
+            font-size: 24px;
+            color: #6a5acd;
+            font-weight: 700;
+        }
+
+
+        .sample-text p strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .sample-text p span {
+            color: #555;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+
+        form#sendEmailForm {
+            margin-top: 30px;
+        }
+
+        form#sendEmailForm label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        form#sendEmailForm textarea {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            box-shadow: none;
+            transition: border 0.3s ease;
+        }
+
+        form#sendEmailForm textarea:focus {
+            border-color: #6a5acd;
+            outline: none;
+        }
+
+
+        form#sendEmailForm .btn {
+            background-color: #6a5acd;
+            color: white;
+            padding: 10px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        form#sendEmailForm .btn:hover {
+            background-color: #5848c2;
+        }
+
+
+        .modal-content {
+            border-radius: 12px;
+        }
+
+        .modal-header, .modal-footer {
+            border: none;
+        }
+
+    </style>
+
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <section class="mt-30 sample-text-area">
+                <h3 class="mb-30">Съобщение</h3>
+                <p class="sample-text">
+                    <strong>Имена:</strong> <span th:text="${request.name}"></span><br>
+                    <strong>Имейл:</strong> <span th:text="${request.email}"></span><br>
+                    <strong>Тема:</strong> <span th:text="${request.subject}"></span><br>
+                    <strong>Съобщение:</strong> <span th:text="${request.message}"></span><br>
+                </p>
+
+                <!-- Flash Message for Success or Error -->
+                <div id="successMessage" style="display: none;" th:if="${successMessage}"
+                     th:text="${successMessage}"></div>
+                <div id="errorMessage" style="display: none;" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
+                <!-- Email Form -->
+                <h3 class="mb-30 mt-30">Напиши отговор</h3>
+                <form action="/admin/sendEmail" id="sendEmailForm" method="post">
+                    <input name="_csrf" th:value="${_csrf.token}" type="hidden"/>
+                    <input name="id" th:value="${request.id}" type="hidden"/>
+                    <input name="adminName" th:value="${adminName}" type="hidden"/>
+
+                    <label for="middleContent">Съобщение:</label>
+                    <textarea id="middleContent" name="middleContent" required rows="5"></textarea><br>
+
+                    <button class="btn btn-success" type="submit">Изпрати</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Success Modal (Lightbox) -->
+    <div aria-hidden="true" aria-labelledby="successModalLabel" class="modal fade" id="successModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Успех!</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Затвори</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/validations/requestDetails.js"></script>
+
+</body>
+</html>

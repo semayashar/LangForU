@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="no-js" lang="bg" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Списък на Заявили Платеж</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/img/logo/logo.ico" type="image/x-icon">
+
+    <!-- CSS файлове -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/custom-images.css">
+    <link rel="stylesheet" href="/css/hamburgers.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Прелоудър -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/img/logo/loder_black.png" alt="Loading">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Хедър -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+
+                <!-- Съобщения за успех/грешка -->
+                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                <h3 class="mb-30">Заявки за курсове</h3>
+                <div class="table-wrap">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Потребител</th>
+                            <th>Курс</th>
+                            <th>Цена</th>
+                            <th>IBAN Описание</th>
+                            <th>Действие</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="request, iterStat : ${requests}">
+                            <td><span th:text="${request.user.name}"></span></td>
+                            <td><span th:text="${request.course.language}"></span></td>
+                            <td><span th:text="${request.course.price + ' лв.'}"></span></td>
+                            <td><span th:text="${request.codeIBAN}"></span></td>
+                            <td>
+                                <form th:action="@{/admin/request/confirm/{id}(id=${request.id})}" method="post"
+                                      th:id="'confirmForm' + ${iterStat.index}" style="display:inline;">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-primary"
+                                            onclick="return confirm('Сигурни ли сте, че искате да потвърдите плащането?');">
+                                        Потвърди плащане
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Футър -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up бутон -->
+<div id="back-top">
+    <a href="#" title="Go to Top"><i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS скриптове -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

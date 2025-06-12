@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Записване за Курс</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main id="main-content" style="display: none;">
+    <section class="sample-text-area">
+        <div class="container box_1170">
+            <h1>Запиши се на курс</h1>
+            <!-- Display messages if any (hidden for JS to handle) -->
+            <div id="message" style="display: none;" th:if="${message}" th:text="${message}"></div>
+            <div id="error" style="display: none;" th:if="${error}" th:text="${error}"></div>
+
+            <!-- Form for signing up -->
+            <form id="signupForm" method="post" th:action="@{/courses/signup/{id}(id=${course.id})}">
+                <input name="courseId" th:value="${course.id}" type="hidden"/>
+
+                <div class="form-group">
+                    <label for="pin">ЕГН:</label>
+                    <input id="pin" name="pin" required th:value="${pin}" type="text"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Аз съм:</label><br/>
+                    <input id="bulgarianCitizen" name="citizenship" required type="radio" value="Български гражданин"/>
+                    <label for="bulgarianCitizen">Български гражданин</label><br/>
+                    <input id="foreigner" name="citizenship" required type="radio" value="Чужденец"/>
+                    <label for="foreigner">Чужденец</label>
+                </div>
+
+                <div class="form-group">
+                    <input id="acceptPolicy" name="acceptPolicy" required type="checkbox"/>
+                    <label for="acceptPolicy">Приемам условията за обучения и приложените заявления.</label>
+                </div>
+                <p style="color: gray;">Личните данни се изискват по ЗПОО и действащите наредби на МОН и се обработват
+                    според GDPR политиките на LangForU ЦПО</p>
+
+                <button class="btn btn4" id="signupButton" type="submit">Запиши се</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/validations/signupForm.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LangForU | Редактирай Лекция</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h3 class="mb-30">Редактиране на лекция</h3>
+                        <form id="lectionForm" method="post" th:action="@{/lections/edit/{id}(id=${lection.id})}"
+                              th:object="${lection}">
+
+                            <div class="mt-10">
+                                <label for="name">Име:</label>
+                                <input class="single-input" id="name" required th:field="*{name}" type="text">
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="theme">Тема:</label>
+                                <input class="single-input" id="theme" required th:field="*{theme}" type="text">
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="videoUrl">Видео URL:</label>
+                                <input class="single-input" id="videoUrl" th:field="*{videoUrl}" type="url">
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="difficultyLevel">Трудност:</label>
+                                <input class="single-input" id="difficultyLevel" required th:field="*{difficultyLevel}"
+                                       type="text">
+                            </div>
+
+                            <div class="mt-10">
+                                <label>Курс:</label>
+                                <select class="single-input" required th:field="*{course.id}">
+                                    <option disabled value="">Избери курс</option>
+                                    <option th:each="course : ${courses}"
+                                            th:selected="${course.id == lection.course.id}"
+                                            th:text="${course.language}"
+                                            th:value="${course.id}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="releaseDate">Дата на излъчване:</label>
+                                <input class="single-input"
+                                       id="releaseDate"
+                                       name="releaseDate"
+                                       required
+                                       th:attr="min=${#temporals.format(lection.course.startDate, 'dd/MM/yyyy')}, max=${#temporals.format(lection.course.endDate, 'dd/MM/yyyy')}"
+                                       th:value="${#temporals.format(lection.releaseDate, 'dd/MM/yyyy')}" type="text">
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="instructor">Инструктор:</label>
+                                <input class="single-input" id="instructor" th:field="*{instructor}" type="text">
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="additionalResources">Допълнителни ресурси:</label>
+                                <div id="quill-additional-resources" style="height: 200px;"></div>
+                                <input id="additionalResources" name="additionalResources" th:value="${lection.additionalResources}"
+                                       type="hidden"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="summary">Резюме:</label>
+                                <div id="quill-summary" style="height: 300px;"></div>
+                                <input id="summary" name="summary" th:value="${lection.summary}" type="hidden"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="examQuestions">Упражнения:</label>
+                                <textarea class="single-textarea" cols="50" id="examQuestions" name="examQuestions"
+                                          required rows="10" th:text="${examQuestions}"></textarea>
+                            </div>
+
+                            <div class="mt-10">
+                                <button class="genric-btn info" type="submit">Запази</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer th:replace="~{fragments/footer}"></footer>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const quillSummary = new Quill('#quill-summary', { theme: 'snow' });
+        const quillResources = new Quill('#quill-additional-resources', { theme: 'snow' });
+
+        quillSummary.root.innerHTML = document.getElementById('summary').value;
+        quillResources.root.innerHTML = document.getElementById('additionalResources').value;
+
+        document.getElementById('lectionForm').addEventListener('submit', function () {
+            document.getElementById('summary').value = quillSummary.root.innerHTML;
+            document.getElementById('additionalResources').value = quillResources.root.innerHTML;
+        });
+
+        flatpickr("#releaseDate", {
+            dateFormat: "d/m/Y",
+            altInput: true,
+            altFormat: "d/m/Y",
+            minDate: flatpickr.parseDate(document.getElementById("releaseDate").getAttribute("min"), "d/m/Y"),
+            maxDate: flatpickr.parseDate(document.getElementById("releaseDate").getAttribute("max"), "d/m/Y")
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000000;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+}
+
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.background .shape {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child {
+    background: linear-gradient(#1845ad, #23a2f6);
+    top: 120px;
+    left: 130px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #ff512f, #f09819);
+    bottom: 130px;
+    right: 120px;
+}
+
+.form-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: row;
+}
+
+/* Adjust for small height viewports */
+@media (max-height: 500px) {
+    .form-wrapper {
+        min-height: auto;
+        padding: 10px;
+    }
+}
+
+/* Stack form-wrapper children on small screens */
+@media (max-width: 768px) {
+    .form-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+form {
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+registerForm {
+    max-width: 670px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.select {
+    all: unset;
+    color: #ffffff;
+    background-color: #313131;
+    border-radius: 5px;
+    border: solid 1px #8264ee;
+    padding-left: 10px;
+    padding-right: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    align-content: center;
+    -webkit-tap-highlight-color: transparent;
+    clear: both;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: inherit;
+    font-size: small;
+    font-weight: normal;
+    height: 40px;
+    line-height: inherit;
+    outline: none;
+    position: relative;
+    text-align: left !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.select:active,
+.select.open,
+.select:focus {
+   background-color: #444444;
+   border: solid 1px #8264ee;
+   box-shadow: 0 0 8px #8264ee;
+}
+
+form h3 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+    grid-column: span 2;
+}
+
+/* Responsive font size for form header */
+@media (max-width: 600px) {
+    form h3 {
+        font-size: 24px;
+    }
+}
+
+label {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* Smaller label text on small screens */
+@media (max-width: 600px) {
+    label {
+        font-size: 13px;
+    }
+}
+
+#dateOfBirth {
+    color: #ffffff;
+    background-color: #313131;
+    border-radius: 5px;
+    border: solid 1px #8264ee;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.single-input {
+    all: unset;
+    color: #ffffff;
+    background-color: #313131;
+    border-radius: 5px;
+    border: solid 1px #8264ee;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#gender {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #ffffff;
+    background-color: #313131;
+    border-radius: 5px;
+    border: solid 1px #8264ee;
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"><polygon points="0,0 12,0 6,6" style="fill:white;"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+input,
+select {
+    color: #ffffff;
+    align-content: center;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #313131;
+    border-radius: 5px;
+    border: solid 1px #8264ee;
+    box-sizing: border-box;
+    clear: both;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: inherit;
+    font-size: small;
+    font-weight: normal;
+    height: 40px;
+    line-height: inherit;
+    outline: none;
+    padding-left: 10px;
+    padding-right: 30px;
+    position: relative;
+    text-align: left !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: 100%;
+}
+
+input:focus,
+select:focus {
+    background-color: #444444;
+    border: solid 1px #8264ee;
+    box-shadow: 0 0 8px #8264ee;
+}
+
+input::placeholder,
+select::placeholder {
+    color: #e5e5e5;
+}
+
+button {
+    margin-top: 30px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    grid-column: span 2;
+}
+
+/* Smaller button padding/font on small screens */
+@media (max-width: 600px) {
+    button {
+        padding: 12px 0;
+        font-size: 16px;
+    }
+}
+
+.social {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.social div {
+    background-color: rgba(255, 255, 255, 0.27);
+    color: #eaf0fb;
+    width: 150px;
+    border-radius: 3px;
+    padding: 5px 10px 10px 5px;
+    text-align: center;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.social div:hover {
+    background-color: rgba(255, 255, 255, 0.47);
+}
+
+.social .fb {
+    margin-left: 25px;
+}
+
+.social i {
+    margin-right: 4px;
+}
+
+/* Stack social buttons vertically on small screens */
+@media (max-width: 600px) {
+    .social {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social div {
+        margin: 5px 0;
+        width: 80%;
+    }
+}
+
+.error-container {
+    height: 30px;
+    margin-top: 5px;
+}
+
+.form-row.full-width {
+    align-content: center;
+    grid-column: span 2;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive grid adjustments */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    form {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 30px;
+    }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+    form {
+        grid-template-columns: 1fr;
+        padding: 20px 15px;
+    }
+
+    .form-row.full-width {
+        grid-column: span 2;
+    }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Лист от Лекции</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <style>
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            table-layout: auto;
+        }
+        th, td {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <!--? Start Align Area -->
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">Курсове</h3>
+                <div class="table-wrap">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Език</th>
+                            <th>Ниво</th>
+                            <th>Начална дата</th>
+                            <th>Функции</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="course : ${courses}">
+                            <td th:text="${course.id}"></td>
+                            <td th:text="${course.language}"></td>
+                            <td th:text="${course.formattedLevel}"></td>
+                            <td th:text="${course.formattedStartDate}"></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/courses/view/{id}(id=${course.id})}">Преглед</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/courses/edit/{id}(id=${course.id})}">Редактиране</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/courses/delete/{id}(id=${course.id})}">Изтриване</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

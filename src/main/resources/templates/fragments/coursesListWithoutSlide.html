@@ -1,0 +1,72 @@
+<!-- Courses area start -->
+<div class="courses-area section-padding40 fix" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-8">
+                <div class="section-tittle text-center mb-55">
+                    <h2>Нашите курсове</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Check if there are no courses -->
+        <div th:if="${#lists.isEmpty(courses)}">
+            <div class="properties properties2 mb-30">
+                <div class="properties__card">
+                    <div class="properties__caption text-center">
+                        <h3>Очаквайте скоро нови курсове</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses listing -->
+        <div class="courses-grid" th:if="${!#lists.isEmpty(courses)}">
+            <div class="properties pb-20" th:each="course, iterStat : ${courses}">
+                <div class="properties__card">
+                    <div class="properties__img overlay1">
+                        <a th:href="@{/courses/view/{id}(id=${course.id})}">
+                            <img th:src="@{${course.pictureUrl}}"
+                                 th:alt="'Изображение на курс по ' + ${course.language}" />
+                        </a>
+                    </div>
+                    <div class="properties__caption">
+                        <span th:text="${#temporals.format(course.startDate, 'dd.MM.yyyy')}"></span>
+                        <h3>
+                            <a th:href="@{/courses/view/{id}(id=${course.id})}"
+                               th:text="${course.language}"></a>
+                        </h3>
+                        <p style="margin-bottom: 30px; height: 80px;">
+                            <span th:text="${@stringUtil.abbreviate(course.description, 15)}"></span>
+                        </p>
+
+                        <div class="properties__footer d-flex justify-content-between align-items-center">
+                            <div class="restaurant-name">
+                                <div class="rating">
+                                    <span th:each="i : ${#numbers.sequence(1, 5)}"
+                                          th:classappend="${i <= course.rating} ? 'fas fa-star' : 'far fa-star'"
+                                          style="color: #FF7B2E;"></span>
+                                </div>
+
+                                <p>
+                                    <span th:text="${course.rating}"></span>
+                                    <span class="orange-text">/ 5</span>
+                                    <span class="small-text">оценка</span>
+                                </p>
+                            </div>
+
+                            <div class="price">
+                                <span th:text="${course.price == null or course.price == 0.0} ? 'Безплатно' : ${#numbers.formatDecimal(course.price, 1, 'DEFAULT', 2, 'DEFAULT')} + ' лв.'"></span>
+                            </div>
+                        </div>
+
+                        <a class="border-btn border-btn2"
+                           th:href="@{/courses/view/{id}(id=${course.id})}"
+                           th:id="'course' + ${iterStat.index + 1}">Разгледай</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Courses area End -->

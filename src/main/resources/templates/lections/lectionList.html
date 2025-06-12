@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+    <title>LangForU | Лист от Лекции</title>
+    <meta content="" name="description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/css/slicknav.css" rel="stylesheet"/>
+    <link href="/css/animate.min.css" rel="stylesheet"/>
+    <link href="/css/custom-images.css" rel="stylesheet"/>
+    <link href="/css/hamburgers.min.css" rel="stylesheet"/>
+    <link href="/css/magnific-popup.css" rel="stylesheet"/>
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet"/>
+    <link href="/css/themify-icons.css" rel="stylesheet"/>
+    <link href="/css/slick.css" rel="stylesheet"/>
+    <link href="/css/nice-select.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="Loading..." src="/img/logo/loder_black.png"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Navigation Fragment -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">Лекции</h3>
+                <div class="table-wrap">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Име</th>
+                            <th>Тема</th>
+                            <th>Трудност</th>
+                            <th>Дата на излъчване</th>
+                            <th>Инструктор</th>
+                            <th>Действия</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lection : ${lections}">
+                            <td th:text="${lection.id}"></td>
+                            <td th:text="${lection.name}"></td>
+                            <td th:text="${lection.theme}"></td>
+                            <td th:text="${lection.difficultyLevel}"></td>
+                            <td th:text="${lection.releaseDate}"></td>
+                            <td th:text="${lection.instructor}"></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/lections/{id}(id=${lection.id})}">Преглед</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/lections/edit/{id}(id=${lection.id})}">Редакция</a>
+                                <a class="btn btn-primary" th:href="@{/lections/delete/{id}(id=${lection.id})}">Изтриване</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer Fragment -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS Scripts Fragment -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

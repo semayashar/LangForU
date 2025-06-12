@@ -1,0 +1,200 @@
+<div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="row">
+        <section class="about-area1 fix pt-10">
+            <div class="support-wrapper align-items-center mt-40">
+                <div class="left-content1 pl-30">
+                    <!-- section tittle -->
+                    <div class="section-tittle section-tittle2 mb-55">
+                        <div class="front-text">
+                            <h2>Информация на потребител</h2>
+                            <p class="sample-text">
+                                Имена: <span th:text="${user.name}"></span><br>
+                                Пол:
+                                <span th:if="${user.gender == 'female'}">Женски</span>
+                                <span th:if="${user.gender == 'male'}">Мъжки</span><br>
+                                Дата на раждане: <span
+                                    th:text="${#temporals.format(user.dateOfBirth, 'dd/MM/yyyy')}"></span><br>
+                                Адрес: <span th:text="${user.address}"></span><br>
+                                Имейл: <span th:text="${user.email}"></span><br>
+                            </p>
+                            <button class="btn btn-primary mt-50" id="changeAvatarButton">Промяна на аватар</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content1">
+                    <!-- img -->
+                    <div class="right-img">
+                        <img alt="Profile Picture" id="currentProfilePicture" th:src="@{${user.profilePicture}}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for Avatar Selection -->
+            <div class="modal" id="avatarModal">
+                <div class="modal-content">
+                    <span class="close" id="closeModal" style="text-align-last: right;">&times;</span>
+                    <h4>Изберете нов аватар</h4>
+                    <div class="avatar-container" id="avatarContainer">
+                        <!-- Avatars will be dynamically populated -->
+                    </div>
+                    <form action="/avatar/save-avatar" id="avatarForm" method="post">
+                        <input id="selectedAvatar" name="profilePicture" type="hidden">
+                        <button class="btn btn-success" id="saveAvatarButton" type="submit">Запази аватар</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('avatarModal');
+    const openModalBtn = document.getElementById('changeAvatarButton');
+    const closeModalBtn = document.getElementById('closeModal');
+    const avatarContainer = document.getElementById('avatarContainer');
+    const selectedAvatarInput = document.getElementById('selectedAvatar');
+    const currentProfilePicture = document.getElementById('currentProfilePicture');
+    const saveAvatarButton = document.getElementById('saveAvatarButton');
+    const avatarForm = document.getElementById('avatarForm');
+    const feedbackElement = document.createElement('div');
+    feedbackElement.id = 'feedback';
+    feedbackElement.style.color = 'red';
+    feedbackElement.style.marginTop = '10px';
+    avatarForm.appendChild(feedbackElement);
+
+    const userGender = '[[${user.gender}]]';
+
+
+    openModalBtn.onclick = () => {
+        loadAvatars();
+        modal.style.display = 'block';
+    };
+
+
+    closeModalBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    function loadAvatars() {
+        fetch(`/avatar/${userGender}`)
+            .then((response) => {
+                if (!response.ok) throw new Error('Failed to load avatars');
+                return response.json();
+            })
+            .then((avatars) => {
+                avatarContainer.innerHTML = '';
+                avatars.forEach((avatar, index) => {
+                    const img = document.createElement('img');
+                    img.src = `/img/avatars/${userGender}/${avatar}`;
+                    img.classList.add('avatar');
+                    img.id = `avatar${index + 1}`;
+                    img.onclick = () => selectAvatar(`/img/avatars/${userGender}/${avatar}`);
+                    avatarContainer.appendChild(img);
+                });
+            })
+            .catch((error) => {
+                feedbackElement.textContent = 'Error loading avatars. Please try again.';
+                console.error('Error fetching avatars:', error);
+            });
+    }
+
+    function selectAvatar(avatarPath) {
+        selectedAvatarInput.value = avatarPath;
+        currentProfilePicture.src = avatarPath;
+    }
+
+    saveAvatarButton.onclick = (event) => {
+        event.preventDefault();
+        const selectedAvatar = selectedAvatarInput.value;
+
+        if (!selectedAvatar) {
+            feedbackElement.textContent = 'Please select an avatar.';
+            return;
+        }
+
+        fetch('/avatar/save-avatar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ profilePicture: selectedAvatar }),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('Failed to save avatar');
+                return response.json();
+            })
+            .then((data) => {
+                if (data.message === 'Аватарът беше записан успешно!') {
+                    feedbackElement.textContent = '';
+                    modal.style.display = 'none';
+                } else {
+                    feedbackElement.textContent = 'Error saving avatar: ' + data.message;
+                }
+            })
+            .catch((error) => {
+                feedbackElement.textContent = 'Error saving avatar. Please try again.';
+                console.error('Error saving avatar:', error);
+            });
+    };
+});
+
+</script>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 5px;
+        width: 60%;
+        text-align: center;
+    }
+
+    .close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #feedback.success {
+        color: green;
+    }
+
+    .avatar-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .avatar:hover {
+        border-color: blue;
+    }
+</style>
+</section>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>LangForU | Детайли за финален изпит</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/logo/logo.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/slicknav.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/custom-images.css">
+    <link rel="stylesheet" href="/css/hamburgers.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/themify-icons.css">
+    <link rel="stylesheet" href="/css/slick.css">
+    <link rel="stylesheet" href="/css/nice-select.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s"><span th:text="${finalExam.name}"></span></h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/final-exams}">Финални изпити</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sample-text-area">
+        <div class="container box_1170">
+            <h3 class="text-heading">Информация за финален изпит</h3>
+            <p class="sample-text">
+                <strong>Курс:</strong> <span th:text="${finalExam.course.language}"></span><br>
+                <strong>Тема на есето:</strong> <span th:text="${finalExam.essayTopic}"></span><br>
+                <strong>Дата на излъчване:</strong> <span th:text="${finalExam.examDate}"></span><br>
+                <strong>Упражнения:</strong>
+            <ul>
+                <li th:each="question : ${finalExam.examQuestions}">
+                    <p><strong>Въпрос:</strong> <span th:text="${question.question}"></span></p>
+                    <p th:if="${question.possibleAnswers != null}"><strong>Предложени отговори:</strong>
+                        <span th:text="${#strings.listJoin(question.possibleAnswers, ', ')}"></span></p>
+                    <p><strong>Верен отговор:</strong> <span th:text="${question.correctAnswer}"></span></p>
+                </li>
+            </ul>
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Потребител</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .box {
+        flex: 1 1 calc(33.333% - 40px);
+        max-width: calc(33.333% - 40px);
+        margin: 10px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        color: #333;
+    }
+
+    .box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .box img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 15px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        padding: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .box img:hover {
+        transform: scale(1.1);
+    }
+
+    .box span {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: capitalize;
+        letter-spacing: 0.5px;
+        color: inherit;
+        transition: color 0.2s ease;
+    }
+
+    .box:hover span {
+        color: #007bff;
+    }
+
+
+    @media screen and (max-width: 768px) {
+        .box {
+            flex: 1 1 calc(50% - 20px);
+            max-width: calc(50% - 20px);
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .box {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+    }
+
+
+    .submenu {
+        padding-left: 20px;
+        list-style: none;
+        margin-top: 5px;
+    }
+
+    .submenu li a {
+        font-size: 14px;
+        color: #555;
+        transition: color 0.2s ease;
+    }
+
+    .submenu li a:hover {
+        color: #007bff;
+    }
+
+    </style>
+</head>
+
+<body>
+
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="topic-area section-padding40">
+        <div class="container">
+            <h3 class="mb-30 mt-30">Админски Панел</h3>
+            <div class="container">
+                <!-- Box for "Добави курс" -->
+                <a class="box" href="/courses/add" id="add-course">
+                    <img alt="Добави курс" src="/img/admin/addCourse.png">
+                    <div>
+                        <span>Добави курс</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Добави лекция" -->
+                <a class="box" href="/lections/add" id="add-lection">
+                    <img alt="обави лекция" src="/img/admin/addLection.png">
+                    <div>
+                        <span>Добави лекция</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Добави блог" -->
+                <a class="box" href="/blog/add" id="add-blog">
+                    <img alt="Добави блог" src="/img/admin/addBlog.png">
+                    <div>
+                        <span>Добави блог</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Добави финален изпит" -->
+                <a class="box" href="/final-exams/add" id="add-finalExam">
+                    <img alt="Добави финален изпит" src="/img/admin/addExam.png">
+                    <div>
+                        <span>Добави финален изпит</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Регистирани потребители" -->
+                <a class="box" href="/admin/users" id="registered-users">
+                    <img alt="Регистирани потребители" src="/img/admin/users.png">
+                    <div>
+                        <span>Регистирани потребители</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Изчакващи потребители" -->
+                <a class="box" href="/admin/unconfirmedUsers" id="pending-users">
+                    <img alt="Заявки за курсове" src="/img/admin/pay.png">
+                    <div>
+                        <span>Заявки за курсове</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Връзка с потребители" -->
+                <a class="box" href="/admin/contactRequests" id="contact-requests">
+                    <img alt="Връзка с потребители" src="/img/admin/ask.png">
+                    <div>
+                        <span>Връзка с потребители</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Блогове" -->
+                <a class="box" href="/admin/blogs" id="blogs">
+                    <img alt="Блогове" src="/img/admin/blogs.png">
+                    <div>
+                        <span>Блогове</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Курсове" -->
+                <a class="box" href="/admin/courses" id="courses">
+                    <img alt="Курсове" src="/img/admin/courses.png">
+                    <div>
+                        <span>Курсове</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Лекции" -->
+                <a class="box" href="/admin/lections" id="lections">
+                    <img alt="Лекции" src="/img/admin/lections.png">
+                    <div>
+                        <span>Лекции</span>
+                    </div>
+                </a>
+
+                <!-- Box for "Лекции" -->
+                <a class="box" href="/admin/final-exams" id="finalExams">
+                    <img alt="Финални изпити" src="/img/admin/exams.png">
+                    <div>
+                        <span>Финални изпити</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

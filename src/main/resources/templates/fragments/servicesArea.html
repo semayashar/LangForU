@@ -1,0 +1,39 @@
+<div class="services-area services-area2 section-padding40" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container">
+        <div class="row justify-content-sm-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="single-services mb-30">
+                    <div class="features-icon">
+                        <img alt="Курсове по UX" src="img/icon/icon1.svg">
+                    </div>
+                    <div class="features-caption">
+                        <h3 th:text="${courses.size() == 0 ? 'Очаквайте курсове скоро' : (courses.size() == 1 ? '1 курс' : (courses.size() + ' курса'))}"></h3>
+                        <p>Разширете езиковите си умения с нашите разнообразни курсове.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="single-services mb-30">
+                    <div class="features-icon">
+                        <img alt="Експертни Инструктори" src="img/icon/icon2.svg">
+                    </div>
+                    <div class="features-caption">
+                        <h3>Експертни Инструктори</h3>
+                        <p>Учи от опитни преподаватели, които са експерти в своите области.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="single-services mb-30">
+                    <div class="features-icon">
+                        <img alt="Достъп за Живот" src="img/icon/icon3.svg">
+                    </div>
+                    <div class="features-caption">
+                        <h3>Достъп за Живот</h3>
+                        <p>Получете неограничен достъп до всички учебни материали и актуализации.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Лекции</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!-- Slider Area Start -->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s" th:text="${course.language}"></h1>
+                                <!-- Breadcrumb Start -->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/profile}">Профил</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Лекции</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- Breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Slider Area End -->
+
+    <!-- Align Area Start -->
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="mb-20">Уроци</h3>
+
+                        <div th:if="${course.lections.size() > 0}">
+                            <ol>
+                                <li th:each="lection, iterStat : ${course.lections}"
+                                    th:if="${lection.hasBeenReleased()}">
+                                    <a style="color: cornflowerblue;"
+                                       th:href="@{/lections/view/{id}(id=${lection.id})}"
+                                       th:text="'Урок ' + ${iterStat.index + 1} + ': ' + ${lection.name}"></a>
+                                </li>
+                                <li th:each="lection, iterStat : ${course.lections}"
+                                    th:unless="${lection.hasBeenReleased()}">
+                                    <span style="color: black;"
+                                          th:text="'Урок ' + ${iterStat.index + 1} + ': ' + ${lection.name} + ' - Предстои'"></span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <p style="color: #7270db;" th:unless="${course.lections.size() > 0}">
+                            Очаквайте скоро нови лекции
+                        </p>
+
+                        <!-- Add a link to the final exam -->
+                        <div>
+                            <h4 class="mt-4">Финален изпит</h4>
+                            <div th:if="${course.finalExam != null}">
+                                <div th:if="${course.endDate == T(java.time.LocalDate).now()}">
+                                    <p>
+                                        <a style="color: cornflowerblue;"
+                                           th:href="@{/final-exams/{id}(id=${course.finalExam.id})}"
+                                           th:text="'Финален изпит за курс: ' + ${course.language}">
+                                        </a>
+                                    </p>
+                                </div>
+                                <div th:unless="${course.endDate == T(java.time.LocalDate).now()}">
+                                    <p style="color: black;" th:text="'Финален изпит за курс: ' + ${course.language}"></p>
+                                </div>
+                            </div>
+
+                            <div th:unless="${course.finalExam != null}">
+                                <p style="color: #7270db;">Очаквайте финалния изпит скоро</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Align Area End -->
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+</body>
+</html>

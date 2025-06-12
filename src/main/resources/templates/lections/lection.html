@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>Лекция</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/flaticon.css" rel="stylesheet">
+    <link href="/css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="/css/gijgo.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/animated-headline.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #2196F3;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+
+
+        .assistant-response {
+            display: none;
+            padding: 30px;
+            background-color: #f0f8ff;
+            border: 1px solid #b0e0e6;
+            color: #333;
+            font-size: 14px;
+            position: relative;
+            margin-top: 14px;
+            max-width: 100%;
+        }
+
+
+        .assistant-response .close-btn {
+            position: absolute;
+            top: 0px;
+            right: 15px;
+            background-color: transparent;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+
+        .assistant-response .close-btn:hover {
+            color: #ff6347;
+        }
+
+
+        .assistant-response strong {
+            font-weight: bold;
+        }
+
+
+        .assistant-response span {
+            font-style: italic;
+        }
+        .sevi-response-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 10px;
+            white-space: normal;
+        }
+
+        .sevi-response-text ul,
+        .sevi-response-text ol {
+            margin-left: 20px;
+            padding-left: 15px;
+        }
+
+        .sevi-response-text strong {
+            font-weight: bold;
+        }
+
+        .sevi-response-text em {
+            font-style: italic;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!-- Lesson Title and Theme -->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s"><span th:text="${lection.name}"></span>
+                                </h1>
+                                <h2 data-animation="bounceIn" data-delay="0.2s"
+                                    style="font-family: 'Mulish';color: white;">
+                                    <span th:text="${lection.theme}"></span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lesson Info Section -->
+    <section class="container box_1170 about-area1 fix pt-10">
+        <div class="support-wrapper align-items-center" style="margin-top: 50px;">
+            <div class="left-content1" style="padding-left: 0px;">
+                <div class="section-tittle section-tittle2 mb-55">
+                    <h3 class="text-heading">Урок</h3>
+
+                    <div class="single-features">
+                        <div class="features-icon"><img alt="" src="assets/img/icon/right-icon.svg"></div>
+                        <div class="features-caption">
+                            <p><strong>Инструктор: </strong><span th:text="${lection.instructor}"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="single-features">
+                        <div class="features-icon"><img alt="" src="assets/img/icon/right-icon.svg"></div>
+                        <div class="features-caption">
+                            <p><strong>Ниво на трудност: </strong><span th:text="${lection.difficultyLevel}"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="single-features">
+                        <div class="features-icon"><img alt="" src="assets/img/icon/right-icon.svg"></div>
+                        <div class="features-caption">
+                            <p><strong>Допълнителни ресурси: </strong></p>
+                            <div th:utext="${lection.additionalResources}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-content1" style="max-width: 500px;background: #bd72f726;min-height: 260px;margin-right: 0px;position: relative;">
+                <div class="right-img">
+                    <!-- Embedded Video -->
+                    <!-- Play Button Overlay -->
+                    <div class="video-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <a class="popup-video btn-icon" th:href="@{${lection.videoUrl}}">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Section -->
+    <section>
+        <div class="container box_1170">
+            <h3 class="text-heading">Резюме</h3>
+            <div th:utext="${lection.summary}"></div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section>
+        <div class="container box_1170">
+            <h3 class="text-heading">Упражнение</h3>
+            <form id="quizForm">
+                <input name="_csrf" th:value="${_csrf.token}" type="hidden"/>
+                <input name="lectionId" th:value="${lection.id}" type="hidden"/>
+
+                <div th:each="exercise : ${lection.questions}">
+                    <!-- Open-Ended Question -->
+                    <div style="margin-bottom: 20px;" th:if="${#lists.isEmpty(exercise.possibleAnswers)}">
+                        <div style="border-top-style: double;display: flex;align-items: center;cursor: pointer;margin-top: 50px;"
+                             th:onclick="'getAssistantHelp(' + ${exercise.id} + ')'">
+                            <img alt="Sevi" src="/img/Sevi/Sevi - S.png" style="height: 18px;margin-right: 2px;">
+                            <p style="font-size: 13px;color: #7885da;">Извикай Севи на помощ!</p>
+                        </div>
+
+                        <strong th:id="'question_' + ${exercise.id}" th:text="${exercise.question}"></strong>
+                        <input class="single-input" placeholder="Въведете Вашия отговор" required
+                               th:name="'question_' + ${exercise.id}" type="text">
+                        <div class="incorrect" style="display: none; color: red; margin-top: 5px;"
+                             th:id="'error_' + ${exercise.id}"></div>
+                        <div class="assistant-response" style="display: none;" th:id="'response_' + ${exercise.id}">
+                            <button class="close-btn" th:onclick="'closeAssistantHelp(' + ${exercise.id} + ')'"
+                                    type="button">×
+                            </button>
+                            <strong>Помощ от Севи:</strong>
+                            <div class="sevi-response-text"></div>
+                        </div>
+                    </div>
+
+                    <!-- Multiple Choice Question -->
+                    <div th:if="${!#lists.isEmpty(exercise.possibleAnswers)}">
+                        <div style="border-top-style: double;display: flex;align-items: center;cursor: pointer;margin-top: 50px;"
+                             th:onclick="'getAssistantHelp(' + ${exercise.id} + ')'">
+                            <img alt="Sevi" src="/img/Sevi/Sevi - S.png" style="height: 18px;margin-right: 2px;">
+                            <p style="font-size: 13px;color: #7885da;">Извикай Севи на помощ!</p>
+                        </div>
+
+                        <strong th:id="'question_' + ${exercise.id}" th:text="${exercise.question}"></strong>
+                        <div th:each="answer, iterStat : ${exercise.possibleAnswers}">
+                            <div class="switch-wrap d-flex align-items-center">
+                                <div class="primary-radio mr-2">
+                                    <input required
+                                           th:id="'radio_' + ${exercise.id} + '_' + ${iterStat.index}"
+                                           th:name="'question_' + ${exercise.id}"
+                                           th:value="${answer}" type="radio"/>
+                                    <label th:for="'radio_' + ${exercise.id} + '_' + ${iterStat.index}"></label>
+                                </div>
+                                <p th:text="${answer}"></p>
+                            </div>
+                        </div>
+                        <div class="incorrect" style="display: none; color: red; margin-top: 5px;"
+                             th:id="'error_' + ${exercise.id}"></div>
+                        <div class="assistant-response" style="display: none;" th:id="'response_' + ${exercise.id}">
+                            <button class="close-btn" th:onclick="'closeAssistantHelp(' + ${exercise.id} + ')'"
+                                    type="button">×
+                            </button>
+                            <strong>Помощ от Севи:</strong>
+                            <div class="sevi-response-text"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit button -->
+                <button class="btn btn-primary" style="margin-bottom: 40px;" type="submit">Проверка</button>
+            </form>
+
+            <!-- Alert element -->
+            <div class="alert" id="customAlert" style="margin-top: 20px;margin-bottom: 40px;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong>Result:</strong> <span id="resultText"></span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/assistant/quizFormHandler.js"></script>
+<script src="/js/assistant/assistantHelp.js"></script>
+<script>
+    function closeAssistantHelp(exerciseId) {
+    const responseBox = document.getElementById(`response_${exerciseId}`);
+    if (responseBox) {
+        responseBox.style.display = 'none';
+    }
+}
+</script>
+</body>
+</html>

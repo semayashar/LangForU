@@ -1,0 +1,133 @@
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+.background {
+    width: 350px;
+    height: 420px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.background .shape {
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.shape:first-child {
+    background: linear-gradient(to bottom, #3d3d5e 0%, #a3a3f2d9 100%);
+    left: -60px;
+    top: -60px;
+}
+
+.shape:last-child {
+    background: linear-gradient(to right, #f1e3bc, #ff9700);
+    right: -20px;
+    bottom: -60px;
+}
+
+form {
+    height: fit-content;
+    width: fit-content;
+    background-color: rgba(255, 255, 255, 0.13);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(8, 7, 16, 0.6);
+    padding: 15px 15px;
+    display: grid;
+    grid-template-columns: 205px 1fr 205px 1fr;
+    grid-gap: 5px;
+    justify-items: stretch;
+    align-items: baseline;
+}
+
+form * {
+    font-family: cursive;
+    color: #1c2140;
+    letter-spacing: 0.4px;
+    outline: none;
+    border: none;
+}
+
+form h3 {
+    font-family: cursive;
+    justify-self: center;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: center;
+    grid-column: span 4;
+}
+
+label {
+    padding-inline: 30px;
+    font-family: cursive;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    resize: none;
+    height: 30px;
+    width: 200px;
+    background-color: rgb(0 0 0 / 10%);
+    border-radius: 3px;
+    padding: 0 8px;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+::placeholder {
+    color: #4f5966;
+}
+
+.question {
+    width: 100%;
+    text-align: -webkit-center;
+    grid-column: span 2;
+}
+
+.social {
+    margin-top: 20px;
+    display: flex;
+    grid-column: span 2;
+}
+
+.social div {
+    width: 120px;
+    border-radius: 3px;
+    padding: 4px 8px 8px 4px;
+    background-color: rgba(255, 255, 255, 0.27);
+    color: #eaf0fb;
+    text-align: center;
+}
+
+.social div:hover {
+    background-color: #1c2140;
+}
+
+.social .fb {
+    margin-left: 20px;
+}
+
+.social i {
+    margin-right: 3px;
+}

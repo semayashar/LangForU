@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js" lang="bg" xmlns:th="http://www.w3.org/1999/xhtml"> <head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Редактирай блог</title>
+    <meta content="Редактиране на съществуващ блог пост в LangForU." name="description"> <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="Лого за зареждане" src="/img/logo/loder_black.png"> </div>
+        </div>
+    </div>
+</div>
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h3 class="mb-30">Редактирай блог</h3>
+                        <form id="blogForm" method="post" th:action="@{/blog/edit/{id}(id=${blog.id})}"
+                              th:object="${blog}"
+                              xmlns:th="http://www.w3.org/1999/xhtml">
+                            <div class="mt-10">
+                                <label for="name">Име на блога:</label>
+                                <input class="single-input" id="name" maxlength="100" minlength="2" placeholder="Име на блога"
+                                       required th:field="*{name}" type="text"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="shortExplanation">Кратко обяснение:</label>
+                                <textarea class="single-textarea" id="shortExplanation"
+                                          onblur="this.placeholder='Кратко обяснение'" onfocus="this.placeholder=''"
+                                          placeholder="Кратко обяснение" required
+                                          th:field="*{shortExplanation}"></textarea>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="blogText">Текст на блога:</label>
+                                <textarea class="single-textarea" id="blogText" onblur="this.placeholder='Текст на блога'"
+                                          onfocus="this.placeholder=''" placeholder="Текст на блога" required
+                                          th:field="*{blogText}"></textarea>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="image">URL на изображението:</label>
+                                <input class="single-input" id="image" onblur="this.placeholder='URL на изображението'" onfocus="this.placeholder=''"
+                                       placeholder="URL на изображението" th:field="*{image}"
+                                       type="text"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="categories">Категории:</label>
+                                <input class="single-input" id="categories" onblur="this.placeholder='Категория1, Категория2'"
+                                       onfocus="this.placeholder=''" placeholder="Категория1, Категория2"
+                                       th:field="*{categories}" type="text"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="tags">Етикети:</label>
+                                <input class="single-input" id="tags" onblur="this.placeholder='Етикет1, Етикет2'" onfocus="this.placeholder=''"
+                                       placeholder="Етикет1, Етикет2" th:field="*{tags}"
+                                       type="text"/>
+                            </div>
+
+                            <div class="mt-10">
+                                <button class="genric-btn primary" type="submit">Актуализирай блога</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer}"></div>
+
+<div id="back-top">
+    <a href="#" title="Към началото"> <i class="fas fa-level-up-alt"></i></a> </div>
+
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/blogForm.js"></script>
+
+</body>
+</html>

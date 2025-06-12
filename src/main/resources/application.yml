@@ -1,0 +1,51 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    password: "0243"
+    url: jdbc:postgresql://localhost:5432/LangForU
+    username: postgres
+    profiles:
+      active: default
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  resources:
+    static-locations: classpath:/static/
+  mvc:
+    format:
+      date: dd/MM/yyyy
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: langforu.softdev@gmail.com
+    password: nfktjemdxxtymlmy
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
+openai:
+  api:
+    key: "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"
+    url: "https://api.openai.com/v1"

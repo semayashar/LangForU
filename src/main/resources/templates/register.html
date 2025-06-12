@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Влез в профил</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="site.webmanifest" rel="manifest">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/slicknav.css" rel="stylesheet">
+    <link href="css/flaticon.css" rel="stylesheet">
+    <link href="css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="css/gijgo.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/animated-headline.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="css/themify-icons.css" rel="stylesheet">
+    <link href="css/slick.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="/css/login-register.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="form-wrapper">
+        <form id="registerForm" method="post" th:action="@{/register}" th:object="${registrationRequest}">
+            <h3>Регистрация</h3>
+
+            <div class="form-row">
+                <label for="email">Имейл:</label>
+                <input id="email" placeholder="Напиши имейл тук" required="required" th:field="*{email}" type="email"/>
+            </div>
+
+            <div class="form-row">
+                <label for="password">Парола:</label>
+                <input id="password" placeholder="Напиши парола тук" required="required" th:field="*{password}"
+                       type="password"/>
+            </div>
+
+            <div class="form-row">
+                <label for="name">Имена:</label>
+                <input id="name" placeholder="Напиши имена тук" required="required" th:field="*{name}" type="text"/>
+            </div>
+
+            <div class="form-row">
+                <label for="dateOfBirth">Дата на раждане:</label>
+                <input class="single-input" id="dateOfBirth" name="dateOfBirth" pattern="\d{2}/\d{2}/\d{4}" placeholder="дд/мм/гггг"
+                       required type="text">
+            </div>
+
+            <div class="form-row">
+                <label for="gender">Пол:</label>
+                <select class="select" id="gender" th:field="*{gender}">
+                    <option value="male">Мъжки</option>
+                    <option value="female">Женски</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="address">Адрес:</label>
+                <input id="address" placeholder="Напиши адрес тук" th:field="*{address}" type="text"/>
+            </div>
+
+            <div class="form-row full-width">
+                <button class="genric-btn primary" type="submit">Регистрация</button>
+            </div>
+
+            <div class="form-row full-width">
+                <p style="font-size: medium; color: white;">Имаш профил?
+                    <a href="/login" style="font-size: medium; color: #8264ee;">Влез сега!</a></p>
+            </div>
+        </form>
+    </div>
+
+    <div class="error error-message" th:if="${error}">
+        <p th:text="${error}">Грешен имейл или парола. Моля, опитайте отново!</p>
+    </div>
+</main>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+<script src="/js/validations/register.js"></script>
+
+</body>
+</html>

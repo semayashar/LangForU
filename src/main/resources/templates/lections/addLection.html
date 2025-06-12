@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Добави Лекция</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!--Quill Js additional -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var quillSummary = new Quill('#quill-summary', {
+                theme: 'snow'
+            });
+
+
+            var quillAdditionalResources = new Quill('#quill-additional-resources', {
+                theme: 'snow'
+            });
+
+
+            document.getElementById('lectionForm').addEventListener('submit', function () {
+                var summaryContent = document.querySelector('#summary');
+                summaryContent.value = quillSummary.root.innerHTML;
+
+                var additionalResourcesContent = document.querySelector('#additionalResources');
+                additionalResourcesContent.value = quillAdditionalResources.root.innerHTML;
+            });
+        });
+    </script>
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h3 class="mb-30">Добавяне на урок</h3>
+                        <form id="lectionForm" method="post" th:action="@{/lections/add}" th:object="${lection}">
+                            <!-- Lesson Name -->
+                            <div class="mt-10">
+                                <label for="name">Урок:</label>
+                                <input class="single-input" id="name" placeholder="Урок" required th:field="*{name}"
+                                       type="text">
+                            </div>
+
+                            <!-- Lesson Theme -->
+                            <div class="mt-10">
+                                <label for="theme">Тема:</label>
+                                <input class="single-input" id="theme" placeholder="Тема" required th:field="*{theme}"
+                                       type="text">
+                            </div>
+
+                            <!-- Video URL -->
+                            <div class="mt-10">
+                                <label for="videoUrl">Видео URL:</label>
+                                <input class="single-input" id="videoUrl" placeholder="Видео URL" th:field="*{videoUrl}"
+                                       type="url">
+                            </div>
+
+                            <!-- Difficulty Level -->
+                            <div class="mt-10">
+                                <label for="difficultyLevel">Ниво на трудност:</label>
+                                <input class="single-input" id="difficultyLevel" placeholder="Ниво на трудност"
+                                       required th:field="*{difficultyLevel}" type="text">
+                            </div>
+
+                            <!-- Course Selection -->
+                            <div class="mt-10">
+                                <label for="courseId">Курс:</label>
+                                <select class="single-input" id="courseId" name="courseId" required>
+                                    <option disabled selected value="">Изберете курс</option>
+                                    <option th:data-end-date="${course.endDate}"
+                                            th:data-start-date="${course.startDate}"
+                                            th:each="course : ${courses}"
+                                            th:text="${course.language}"
+                                            th:value="${course.id}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Release Date -->
+                            <div class="mt-10">
+                                <label for="releaseDate">Дата на излъчване:</label>
+                                <input class="single-input" id="releaseDate" name="releaseDate" pattern="\d{2}/\d{2}/\d{4}" placeholder="дд/мм/гггг"
+                                       required type="text">
+                            </div>
+
+                            <!-- Instructor -->
+                            <div class="mt-10">
+                                <label for="instructor">Инструктор:</label>
+                                <input class="single-input" id="instructor" placeholder="Инструктор" th:field="*{instructor}"
+                                       type="text">
+                            </div>
+
+                            <!-- Additional Resources with Quill Editor -->
+                            <div class="mt-10">
+                                <label for="additionalResources">Допълнителни ресурси:</label>
+                                <div id="quill-additional-resources" style="height: 200px;"></div>
+                                <input id="additionalResources" name="additionalResources" th:field="*{additionalResources}"
+                                       type="hidden"/>
+                            </div>
+
+                            <!-- Summary с WYSIWYG редактор -->
+                            <div class="mt-10">
+                                <label for="summary">Резюме:</label>
+                                <div id="quill-summary" style="height: 300px;"></div>
+                                <input id="summary" name="summary" th:field="*{summary}" type="hidden"/>
+                            </div>
+
+                            <!-- Questions -->
+                            <div class="description-questions">
+                                <h5>Упътване за форматиране на упражнения</h5>
+
+                                <p>За форматиране на текста за упражнения е важно да се спазват определени структури в
+                                    зависимост от типа на отговора.</p>
+
+                                <h6>Затворени отговори</h6>
+                                <p>
+                                    Структурата включва въпрос, възможни отговори и верен отговор.
+                                    Въпросът е последван от <code>---</code>, след което следва списък с възможни
+                                    отговори, разделени със символа <code>=</code>.
+                                    Верният отговор се поставя след възможните отговори, разделен със символа
+                                    <code>---</code>.
+                                    Всеки въпрос завършва с <code>;</code>.
+                                </p>
+
+                                <h6>Свободни отговори</h6>
+                                <p>
+                                    Структурата също започва с въпрос, който е последван от <code>---</code>.
+                                    След това следва <code>***</code>, което означава, че няма предварително зададени
+                                    опции.
+                                    Верният отговор се задава след <code>---</code> и може да остане празен, ако
+                                    желаете.
+                                </p>
+
+                                <p>
+                                    Накрая, списъкът от упражнения трябва да завърши с <code>;;;.</code>
+                                </p>
+
+                                <p>Следвайте тези указания, за да форматирате текста правилно за упражнения с затворени
+                                    и свободни отговори.</p>
+                            </div>
+
+                            <div class="mt-10">
+                                <label for="examQuestions">Упражнения:</label>
+                                <textarea class="single-textarea" cols="50" id="examQuestions" name="examQuestions"
+                                          placeholder="Какъв филм гледахте миналия месец?---комедия=трилър=драма---драма;
+Пътувахте ли някъде това лято?---да=не---не;
+Пътувахте ли някъде тази зима?---***---не;
+;;;"
+                                          required rows="10"></textarea>
+                            </div>
+
+                            <!-- Save Button -->
+                            <div class="mt-10">
+                                <button class="genric-btn info" type="submit">Запази</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+
+</script>
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/validations/addLection.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+</body>
+</html>

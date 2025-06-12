@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Потребител</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <section class="sample-text-area">
+                <h3 class="mb-30">Информация за потребител</h3>
+                <p class="sample-text">
+                    <strong>Имена:</strong> <span th:text="${user.name}"></span><br>
+                    <strong>Пол:</strong> <span th:if="${user.gender == 'female'}">Женски</span>
+                    <span th:if="${user.gender == 'male'}">Мъжки</span><br><br>
+                    <strong>Дата на раждане:</strong> <span
+                        th:text="${#temporals.format(user.dateOfBirth, 'dd/MM/yyyy')}"></span><br>
+                    <strong>Адрес:</strong> <span th:text="${user.address}"></span><br>
+                    <strong>Имейл:</strong> <span th:text="${user.email}"></span><br>
+                    <strong>Роля:</strong> <span th:text="${user.appUserRole}"></span><br>
+                </p>
+
+                <!-- Conditionally render Enable/Disable button -->
+                <a class="genric-btn success-border" th:href="@{/admin/enableUser/{id}(id=${user.id})}"
+                   th:if="${!user.isEnabled()}">Активирай Акаунт</a>
+                <a class="genric-btn danger-border" th:href="@{/admin/disableUser/{id}(id=${user.id})}"
+                   th:if="${user.isEnabled()}">Деактивирай Акаунт</a>
+                <form th:action="@{/admin/deleteUser/{id}(id=${user.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="genric-btn danger-border">Изтрий потребител</button>
+                </form>
+                <a class="genric-btn info-border" th:href="@{/admin/sendUserAdminRequest/{id}(id=${user.id})}">Изпрати
+                    заявка за 'АДМИН'</a>
+
+                <!-- Alert Box -->
+                <div th:classappend="${success} ? ' alert-success' : 'alert alert-error'" th:if="${message != null}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <p style="margin-bottom: 0px; color: white;" th:text="${message}"></p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <h3 class="mb-30">Записани курсове</h3>
+                <div class="row" style="align-items: flex-end;">
+                    <!-- Iterate over each course in the user's courses list -->
+                    <div class="col-md-4" th:each="course : ${user.courses}">
+                        <div class="single-defination">
+                            <!-- Display course language if it exists -->
+                            <li class="mb-20 custom-title">Курс:
+                                <span th:text="${course.language ?: 'Not specified'}"></span>
+                            </li>
+                            <!-- Display course level if it exists -->
+                            <ol class="custom-text">Ниво:
+                                <span th:text="${course.level ?: 'Not specified'}"></span>
+                            </ol>
+                            <!-- Display course start date if it exists -->
+                            <ol class="custom-text">Начална дата:
+                                <span th:text="${course.startDate ?: 'Not specified'}"></span>
+                            </ol>
+                            <!-- Display course end date if it exists -->
+                            <ol class="custom-text">Крайна дата:
+                                <span th:text="${course.endDate ?: 'Not specified'}"></span>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- If no courses are available, show a message -->
+                <div th:if="${#lists.isEmpty(user.courses)}">
+                    <p>Няма записани курсове.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+
+</body>
+</html>

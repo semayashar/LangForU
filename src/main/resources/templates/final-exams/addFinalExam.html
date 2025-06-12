@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Добави Финален Изпит</title>
+    <meta content="Добавете финален изпит за курс." name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader End -->
+
+<!-- Header Start -->
+<header th:replace="~{fragments/navigation}"></header>
+<!-- Header End -->
+
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h3 class="mb-30">Добавяне на Финален Изпит</h3>
+                        <form id="finalExamForm" method="post" th:action="@{/final-exams/add}">
+
+                            <!-- Course Selection -->
+                            <div class="mt-10">
+                                <label for="course">Избери курс</label>
+                                <select id="course" name="courseId">
+                                    <option th:each="course : ${courses}" th:text="${course.language}"
+                                            th:value="${course.id}"></option>
+                                </select>
+                                <div class="error-message" id="course-error"></div>
+                            </div>
+
+                            <!-- Exam Questions -->
+                            <div class="mt-10">
+                                <label for="examQuestions">Изпитни упражнения:</label>
+                                <textarea class="single-input" id="examQuestions"
+                                          style="height: 180px;"
+                                          name="examQuestions"
+                                          placeholder="Добавете изпитни упражнения в следния формат: въпрос---***---;"></textarea>
+                                <div class="error-message" id="examQuestions-error"></div>
+                            </div>
+
+                            <!-- Essay Theme -->
+                            <div class="mt-10">
+                                <label for="essayTopic">Тема за есе:</label>
+                                <textarea class="single-input" id="essayTopic" name="essayTopic"
+                                          placeholder="Тема за есе"></textarea>
+                                <div class="error-message" id="essayTopic-error"></div>
+                            </div>
+
+                            <!-- Save Button -->
+                            <div class="mt-10">
+                                <button class="genric-btn info" type="submit">Запази</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/validations/addFinalExam.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Footer Start -->
+<script th:replace="~{fragments/footer}"></script>
+<!-- Footer End -->
+
+</body>
+</html>

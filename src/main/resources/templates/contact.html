@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="no-js" lang="bg" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>
+        LangForU | Контакти
+    </title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+    <!-- CSS here -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/slicknav.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/hamburgers.min.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="css/themify-icons.css" rel="stylesheet">
+    <link href="css/slick.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle">
+            </div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+<!-- Header Start -->
+<header th:replace="~{fragments/navigation}">
+</header>
+<!-- Header End -->
+<main>
+    <!--? slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s">
+                                    Свържете се с нас
+                                </h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a href="index.html">
+                                                Начало
+                                            </a>
+                                        </li>
+                                        <li class="breadcrumb-item">
+                                            <a href="#">
+                                                Контакти
+                                            </a>
+                                        </li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--? Contact Area start -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="contact-title">
+                Къде сме?
+            </h2>
+            <div class="d-none d-sm-block mb-5 pb-4">
+                <div class="map">
+                    <!-- Embedded Google Map -->
+                    <iframe allowfullscreen=""
+                            aria-hidden="false" frameborder="0" height="450" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d27755.97237323623!2d26.3439835!3d43.9624281!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDPCsDU3JzQ0LjgiTiAyNsKwMjAnMzcuOSJF!5e0!3m2!1sbg!2sbg!4v1696432397038!5m2!1sbg!2sbg" style="border:0;"
+                            tabindex="0" width="100%">
+                    </iframe>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">
+                            Свържете се с нас
+                        </h2>
+                    </div>
+                    <div class="col-lg-7">
+                        <form id="contactForm" method="post" novalidate="novalidate" th:action="@{/contact}">
+                            <div class="form-group">
+                                <input class="form-control" id="name" name="name" placeholder="Въведете вашето име"
+                                       required type="text"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="email" name="email" placeholder="Имейл" required
+                                       type="email"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="subject" name="subject" placeholder="Въведете тема"
+                                       required type="text"/>
+                            </div>
+                            <div class="form-group">
+                            <textarea class="form-control w-100" cols="30" id="message" name="message"
+                                      placeholder="Въведете съобщение" required rows="9"></textarea>
+                            </div>
+
+                            <!-- Success/Error Messages -->
+                            <div th:if="${successMessage}">
+                                <div class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+                            </div>
+                            <div th:if="${errorMessage}">
+                                <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <button class="button button-contactForm boxed-btn" type="submit">
+                                    Изпратете
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="media contact-info">
+                        <span class="contact-info__icon">
+                            <i class="ti-home"></i>
+                        </span>
+                            <div class="media-body">
+                                <h3>
+                                    с. Голямо Враново, обл. Русе, България
+                                </h3>
+                                <p>
+                                    ул. "Славянска" 4
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media contact-info">
+                        <span class="contact-info__icon">
+                            <i class="ti-tablet"></i>
+                        </span>
+                            <div class="media-body">
+                                <h3>
+                                    +359 89 5093 716
+                                </h3>
+                                <p>
+                                    Пон-Пет 9:00 - 18:00
+                                </p>
+                            </div>
+                        </div>
+                        <div class="media contact-info">
+                        <span class="contact-info__icon">
+                            <i class="ti-email"></i>
+                        </span>
+                            <div class="media-body">
+                                <h3>
+                                    langforu.softdev@gmail.com
+                                </h3>
+                                <p>
+                                    Изпратете ни вашето запитване по всяко време!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Area End -->
+</main>
+<!-- Footer -->
+<div th:replace="~{fragments/footer}">
+</div>
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top">
+        <i class="fas fa-level-up-alt">
+        </i>
+    </a>
+</div>
+<!-- JS here -->
+<script th:replace="~{fragments/script}">
+</script>
+<!-- Custom JS to handle form submission -->
+<script src="js/validations/contact.js">
+</script>
+</body>
+
+</html>

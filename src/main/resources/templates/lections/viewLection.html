@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Детайли за Лекция</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<!-- Header -->
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s"><span th:text="${lection.name}"></span>
+                                </h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/lections}">Лекции</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="sample-text-area" xmlns:th="http://www.w3.org/1999/xhtml">
+        <div class="container box_1170">
+            <!-- Lesson Info Section -->
+            <section class="container box_1170 about-area1 fix pt-10">
+                <div class="support-wrapper align-items-center" style="margin-top: 50px;">
+                    <div class="left-content1" style="padding-left: 0px;">
+                        <div class="section-tittle section-tittle2 mb-55">
+                            <h3 class="text-heading">Урок: <span th:text="${lection.name}"></span></h3>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img alt="" src="assets/img/icon/right-icon.svg">
+                                </div>
+                                <div class="features-caption">
+                                    <p><strong>Тема: </strong><span th:text="${lection.theme}"></span></p>
+                                </div>
+                            </div>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img alt="" src="assets/img/icon/right-icon.svg">
+                                </div>
+                                <div class="features-caption">
+                                    <p><strong>Видео URL: </strong><span th:text="${lection.videoUrl}"></span></p>
+                                </div>
+                            </div>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img alt="" src="assets/img/icon/right-icon.svg">
+                                </div>
+                                <div class="features-caption">
+                                    <p><strong>Инструктор: </strong><span th:text="${lection.instructor}"></span></p>
+                                </div>
+                            </div>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img alt="" src="assets/img/icon/right-icon.svg">
+                                </div>
+                                <div class="features-caption">
+                                    <p><strong>Ниво на трудност: </strong><span
+                                            th:text="${lection.difficultyLevel}"></span></p>
+                                </div>
+                            </div>
+                            <div class="single-features">
+                                <div class="features-icon">
+                                    <img alt="" src="assets/img/icon/right-icon.svg">
+                                </div>
+                                <div class="features-caption">
+                                    <p><strong>Дата на излъчване: </strong><span
+                                            th:text="${lection.releaseDate}"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="right-content1" style="max-width: 500px;background: #bd72f726;min-height: 260px;margin-right: 0px;position: relative;">
+                        <div class="right-img">
+                            <!-- Embedded Video -->
+                            <!-- Play Button Overlay -->
+                            <div class="video-icon" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <a class="popup-video btn-icon" th:href="@{${lection.videoUrl}}">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Summary Section -->
+            <section>
+                <div class="container box_1170">
+                    <h3 class="text-heading">Резюме</h3>
+                    <div th:utext="${lection.summary}"></div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container box_1170 mt-30">
+                    <h4>Упражнения</h4>
+                    <ul>
+                        <li th:each="question : ${lection.questions}">
+                            <p><strong>Въпрос:</strong> <span th:text="${question.question}"></span></p>
+                            <p th:if="${question.possibleAnswers != null}"><strong>Предложени отговори:</strong>
+                                <span th:text="${#strings.listJoin(question.possibleAnswers, ', ')}"></span></p>
+                            <p><strong>Верен отговор:</strong> <span th:text="${question.correctAnswer}"></span></p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>

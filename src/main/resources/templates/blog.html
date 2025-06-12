@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Блог</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="site.webmanifest" rel="manifest">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/flaticon.css" rel="stylesheet">
+    <link href="/css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="/css/gijgo.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/animated-headline.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!--? Slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s">Блогове</h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/blog}">Блог</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--? Slider Area End-->
+    <!-- Секция за Блог Начало -->
+    <section class="blog_area section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+
+                        <!-- Show 'NO BLOGS' message if there are no blogs -->
+                        <div th:if="${blogs.isEmpty()}">
+                            <h2 class="text-center">Очаквайте нови блогове скоро</h2>
+                            <p class="text-center">Следете за нови и интересни публикации!</p>
+                        </div>
+
+                        <!-- Display blogs if they exist -->
+                        <div th:if="${!blogs.isEmpty()}">
+                            <article class="blog_item" th:each="blog : ${blogs}">
+                                <div class="blog_item_img">
+                                    <img alt="Blog Post" class="card-img rounded-0" th:src="@{${blog.image}}">
+                                    <h3 class="blog_item_date" th:text="${blog.date}"></h3>
+                                </div>
+                                <div class="blog_details">
+                                    <a class="d-inline-block" th:href="@{'/blog/detail/' + ${blog.id}}">
+                                        <h2 class="blog-head" style="color: #2d2d2d;" th:text="${blog.name}"></h2>
+                                    </a>
+                                    <p th:text="${blog.shortExplanation}"></p>
+                                    <ul class="blog-info-link">
+                                        <li><a href="#"><i class="fa fa-user"></i> <span th:text="${blog.tags}"></span></a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-comments"></i> <span
+                                                th:text="${blog.commentsCount}"></span> Коментари</a></li>
+                                    </ul>
+                                </div>
+                            </article>
+                        </div>
+
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
+                                    <a class="page-link"
+                                       tabindex="-1" th:href="@{/blog(page=${currentPage > 0 ? currentPage - 1 : 0})}">Previous</a>
+                                </li>
+
+                                <li class="page-item" th:classappend="${i == currentPage} ? 'active'"
+                                    th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                                    <a class="page-link" th:href="@{/blog(page=${i})}" th:text="${i + 1}">1</a>
+                                </li>
+                                <li class="page-item"
+                                    th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
+                                    <a class="page-link"
+                                       th:href="@{/blog(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1})}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form action="/blog/search" id="blogSearchForm" method="GET">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input class="form-control" id="blogSearchInput" name="query" onblur="this.placeholder = 'Търсене на блог'"
+                                               onfocus="this.placeholder = ''"
+                                               placeholder="Търсене на блог"
+                                               required
+                                               type="text">
+                                        <div class="input-group-append">
+                                            <button class="btns" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="validation-message text-danger" style="display: none;"></div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        type="submit">Търсене
+                                </button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title" style="color: #2d2d2d;">Категории</h4>
+                            <ul class="list cat-list">
+                                <li th:each="category : ${categories}">
+                                    <a class="d-flex"
+                                       th:href="@{/blog/category/{categoryName}(categoryName=${category})}" th:text="${category}"></a>
+                                </li>
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title" style="color: #2d2d2d;">Нови публикации</h3>
+                            <div class="media post_item" th:each="post : ${recentPosts}">
+                                <img alt="пост" class="img-blog-last5" th:src="@{${post.image}}">
+                                <div class="media-body">
+                                    <a th:href="@{/blog/detail/{id}(id=${post.id})}">
+                                        <h3 style="color: #2d2d2d;" th:text="${post.name}"></h3>
+                                    </a>
+                                    <p th:if="${post.date != null}"
+                                       th:text="${#temporals.format(post.date, 'dd MMMM yyyy')}"></p>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <aside class="single_sidebar_widget tag_cloud_widget">
+                            <h4 class="widget_title" style="color: #2d2d2d;">Тагове</h4>
+                            <ul class="list">
+                                <li th:each="tag : ${tags}">
+                                    <a th:href="@{/blog/tag/{tagName}(tagName=${tag})}" th:text="${tag}"></a>
+                                </li>
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget newsletter_widget">
+                            <h4 class="widget_title" style="color: #2d2d2d;">Абонирайте се за известия</h4>
+                            <form action="/blog/subscribe" id="newsletterForm" method="POST">
+                                <input class="form-control" id="emailInput" name="email" onblur="this.placeholder = 'Въведете имейл'"
+                                       onfocus="this.placeholder = ''"
+                                       placeholder='Въведете имейл'
+                                       type="email">
+                                <div class="validation-message text-danger" style="display: none;"></div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                        style="margin-block: 15px;" type="submit">Абонирайте се
+                                </button>
+                            </form>
+                            <div id="successMessage" style="display:none; color: green; margin-top: 10px;">Успешно
+                                абонирани!
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Секция за Блог Край -->
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="js/validations/blog.js"></script>
+
+</body>
+</html>

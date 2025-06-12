@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Потребител</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+<main>
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <h3 class="mb-30">Добави нова блог статия</h3>
+                        <form action="/blog/add" id="blogForm" method="post" th:object="${blog}">
+
+                            <!-- CSRF Token -->
+                            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
+                            <!-- Blog Name -->
+                            <div class="mt-10">
+                                <label for="name">Име на блога:</label>
+                                <input class="single-input" id="name" maxlength="100" minlength="2" name="name"
+                                       placeholder="Име на блога" required type="text">
+                            </div>
+
+                            <!-- Short Explanation -->
+                            <div class="mt-10">
+                                <label for="shortExplanation">Кратко описание:</label>
+                                <textarea class="single-textarea" id="shortExplanation" name="shortExplanation"
+                                          onblur="this.placeholder='Кратко описание'" onfocus="this.placeholder=''"
+                                          placeholder="Кратко описание" required></textarea>
+                            </div>
+
+                            <!-- Blog Text -->
+                            <div class="mt-10">
+                                <label for="blogText">Текст на блога:</label>
+                                <textarea class="single-textarea" id="blogText" name="blogText"
+                                          onblur="this.placeholder='Текст на блога'" onfocus="this.placeholder=''"
+                                          placeholder="Текст на блога" required></textarea>
+                            </div>
+
+                            <!-- Image URL -->
+                            <div class="mt-10">
+                                <label for="image">Снимка (линк):</label>
+                                <input class="single-input" id="image" name="image" onblur="this.placeholder='Снимка (линк)'"
+                                       onfocus="this.placeholder=''" placeholder="Снимка (линк)"
+                                       type="text">
+                            </div>
+
+                            <!-- Categories -->
+                            <div class="mt-10">
+                                <label for="categories">Категории (разделени със запетая):</label>
+                                <input class="single-input" id="categories" name="categories"
+                                       onblur="this.placeholder='Категория1, Категория2, Категория3'" onfocus="this.placeholder=''"
+                                       placeholder="Категория1, Категория2, Категория3"
+                                       type="text">
+                            </div>
+
+                            <!-- Tags -->
+                            <div class="mt-10">
+                                <label for="tags">Тагове (разделени със запетая):</label>
+                                <input class="single-input" id="tags" name="tags" onblur="this.placeholder='Таг1, Таг2, Таг3'"
+                                       onfocus="this.placeholder=''" placeholder="Таг1, Таг2, Таг3"
+                                       type="text">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="mt-10">
+                                <button class="genric-btn primary" type="submit">Запази блога</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="/js/validations/addBlog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>LangForU | Курсове</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="site.webmanifest" rel="manifest">
+    <link href="img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/slicknav.css" rel="stylesheet">
+    <link href="css/flaticon.css" rel="stylesheet">
+    <link href="css/progressbar_barfiller.css" rel="stylesheet">
+    <link href="css/gijgo.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/animated-headline.css" rel="stylesheet">
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="css/themify-icons.css" rel="stylesheet">
+    <link href="css/slick.css" rel="stylesheet">
+    <link href="css/nice-select.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!--? Slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s">Нашите курсове</h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/index}">Начало</a></li>
+                                        <li class="breadcrumb-item"><a th:href="@{/courses}">Курсове</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--? Slider Area End-->
+
+    <div class="mt-30">
+        <div class="blog_right_sidebar">
+            <div class="container">
+                <aside class="single_sidebar_widget search_widget">
+                    <form action="/courses" id="coursesSearchForm" method="GET">
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <input class="form-control" name="searchLanguage" onblur="this.placeholder = 'Търсене на курс'"
+                                       onfocus="this.placeholder = ''"
+                                       placeholder='Търсене на курс'
+                                       required
+                                       type="text">
+                                <div class="input-group-append">
+                                    <button class="btns" type="submit"><i class="ti-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="validation-message text-danger" style="display: none;"></div>
+                        </div>
+                        <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">
+                            Търсене
+                        </button>
+                    </form>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- ? services-area -->
+    <header th:replace="~{fragments/servicesArea}"></header>
+    <!-- services-area End -->
+
+    <!-- Courses area start -->
+    <header th:replace="~{fragments/coursesListWithoutSlide}"></header>
+    <!-- Courses area End -->
+
+    <!-- Top Subjects Area Start -->
+    <div class="topic-area section-padding40">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2>Разгледайте водещи теми</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Безплатни курсове" src="img/gallery/begginers_free_course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Безплатни%20курсове">Безплатни курсове</a>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Начално ниво курсове" src="img/gallery/begginers_course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Начално%20ниво%20курсове">Начално ниво
+                                        курсове</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Средно ниво курсове" src="img/gallery/middle_course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Средно%20ниво%20курсове">Средно ниво
+                                        курсове</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Напреднало ниво курсове" src="img/gallery/advanced_course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Напреднало%20ниво%20курсове">Напреднало ниво
+                                        курсове</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Нещо интересно" src="img/gallery/culture _course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Нещо%20интересно">Нещо интересно</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Мини Курсове" src="img/gallery/mini_course.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="/courses?searchDescription=Мини%20Курсове">Мини Курсове</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- English Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Английски език" src="img/gallery/Flag_of_the_United_Kingdom.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Английски')}">Английски език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- German Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Немски език" src="img/gallery/Flag_of_the_Germany.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Немски')}">Немски език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Italian Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Италиански език" src="img/gallery/Flag_of_Italy.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Италиански')}">Италиански език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spanish Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Испански език" src="img/gallery/Flag_of_Spain.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Испански')}">Испански език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Russian Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Руски език" src="img/gallery/Flag_of_the_Russia.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Руски')}">Руски език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Japanese Language -->
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img alt="Японски език" src="img/gallery/Flag_of_Japan.svg.png">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a th:href="@{/courses(searchLanguage='Японски')}">Японски език</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Subjects End -->
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+<script src="js/validations/searchCourses.js"></script>
+
+</body>
+</html>

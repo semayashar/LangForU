@@ -1,0 +1,48 @@
+<!-- Courses area start -->
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container box_1170">
+        <div class="section-top-border">
+            <h3 class="mb-30">Вашите записани курсове</h3>
+
+            <!-- Check if there are no courses -->
+            <div th:if="${user.courses == null or user.courses.empty}">
+                <blockquote class="generic-blockquote">
+                    Няма записани курсове!
+                </blockquote>
+            </div>
+
+            <!-- Courses listing -->
+            <div class="courses-area section-padding40 fix">
+                <div class="courses-actives" th:if="${user.courses != null and !user.courses.empty}">
+                    <div class="properties pb-20" th:each="course : ${user.courses}">
+                        <div class="properties__card">
+                            <div class="properties__img overlay1">
+                                <a th:href="@{/courses/course/details/{id}(id=${course.id})}"><img
+                                        alt="" th:src="@{${course.pictureUrl}}"></a>
+                            </div>
+                            <div class="properties__caption">
+                                <p th:text="${course.startDate}"></p>
+                                <h3><a th:href="@{/courses/course/details/{id}(id=${course.id})}"
+                                       th:text="${course.language}"></a></h3>
+                                <p>
+                                    <span th:text="${@stringUtil.abbreviate(course.description, 20)}"></span>
+                                </p>
+                                <div class="properties__footer d-flex justify-content-between align-items-center">
+                                    <div class="restaurant-name">
+                                        <p>
+                                            Начална дата: <span th:text="${course.startDate}"> </span>
+                                            <br>
+                                            Крайна дата: <span th:text="${course.endDate}"> </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <a class="border-btn border-btn2"
+                                   th:href="@{/courses/course/details/{id}(id=${course.id})}">Избери</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

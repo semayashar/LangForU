@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <title>Потребители</title>
+    <meta content="" name="description">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="/img/logo/logo.ico" rel="shortcut icon" type="image/x-icon">
+
+    <!-- CSS here -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="/css/slicknav.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/custom-images.css" rel="stylesheet">
+    <link href="/css/hamburgers.min.css" rel="stylesheet">
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="/css/themify-icons.css" rel="stylesheet">
+    <link href="/css/slick.css" rel="stylesheet">
+    <link href="/css/nice-select.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+</head>
+<body>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img alt="" src="/img/logo/loder_black.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+
+<header th:replace="~{fragments/navigation}"></header>
+
+<main>
+    <!--? slider Area Start-->
+    <section class="slider-area slider-area2">
+        <div class="slider-active">
+            <!-- Single Slider -->
+            <div class="single-slider slider-height2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-11 col-md-12">
+                            <div class="hero__caption hero__caption2">
+                                <h1 data-animation="bounceIn" data-delay="0.2s" th:text="${course.language}"></h1>
+                                <!-- breadcrumb Start-->
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a th:href="@{/courses}">Курсове</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Детайли на курс</a></li>
+                                    </ol>
+                                </nav>
+                                <!-- breadcrumb End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--?  Contact Area start  -->
+    <div class="container">
+        <div class="row">
+            <!-- Course Details Section -->
+            <div class="col-lg">
+                <section class="sample-text-area">
+                    <div class="container box_1170">
+                        <p class="sample-text">
+                            <span class="attribute-label"></span>
+                            <span class="attribute-value" th:text="${course.description}"></span>
+                        </p>
+
+                        <div class="section-top-border">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img alt="" class="img-fluid" th:src="@{${course.pictureUrl}}">
+                                    <div class="section-top-border">
+                                        <h3 class="mb-30">Лекции в курса</h3>
+                                        <ul class="unordered-list">
+                                            <li th:each="lection : ${lections}" th:text="${lection.name}">Име на лекция</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mt-sm-20">
+                                    <p><span class="attribute-label"><strong>Ниво:</strong></span>
+                                        <span class="attribute-value" th:text="${course.getFormattedLevel()}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Цена:</strong></span>
+                                        <span class="attribute-value" th:text="${course.getFormattedPrice()}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Начална дата:</strong></span>
+                                        <span class="attribute-value"
+                                              th:text="${course.getFormattedStartDate()}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Крайна дата:</strong></span>
+                                        <span class="attribute-value" th:text="${course.getFormattedEndDate()}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Продължителност в седмици:</strong></span>
+                                        <span class="attribute-value" th:text="${course.getDurationInWeeks()}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Основен лектор:</strong></span>
+                                        <span class="attribute-value" th:text="${course.mainInstructorName}"></span>
+                                    </p>
+                                    <p><span class="attribute-label"><strong>Втори лектор:</strong></span>
+                                        <span class="attribute-value"
+                                              th:text="${course.assistantInstructorName}"></span>
+                                    </p>
+
+                                </div>
+
+                                <a class="genric-btn primary e-large"
+                                   id="signupButton"
+                                   sec:authorize="hasAuthority('ROLE_USER')"
+                                   style="margin-left: 15px;"
+                                   th:href="@{/courses/signup/{id}(id=${course.id})}">Запиши се!</a>
+                                <a class="genric-btn primary e-large"
+                                   sec:authorize="isAnonymous()"
+                                   style="margin-left: 15px;" th:href="@{/login}">Започни сега!</a>
+
+                            </div>
+                            <div class="alert alert-danger" th:if="${error != null}">
+                                <p th:text="${error}"></p>
+                            </div>
+                            <div class="alert alert-success" th:if="${message != null}">
+                                <p th:text="${message}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{fragments/footer}"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a href="#" title="Go to Top"> <i class="fas fa-level-up-alt"></i></a>
+</div>
+
+<!-- JS here -->
+<script th:replace="~{fragments/script}"></script>
+
+</body>
+</html>
