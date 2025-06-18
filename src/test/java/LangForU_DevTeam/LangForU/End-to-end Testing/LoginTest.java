@@ -42,7 +42,7 @@ public class LoginTest {
         WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
         submitButton.click();
 
-        WebElement passwordError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".error-message")));
+        WebElement passwordError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password-error")));
         assertEquals("Паролата трябва да бъде поне 8 символа.", passwordError.getText(), "Validation message for short password is incorrect.");
     }
 
