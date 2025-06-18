@@ -103,6 +103,6 @@ public class CourseService {
      * @return Списък ({@link List}) от курсове без финален изпит.
      */
     public List<Course> findCoursesWithoutFinalExam() {
-        return courseRepository.findByFinalExamIsNull();
+        return courseRepository.findCoursesWithoutFinalExamJPQL();
     }
 }

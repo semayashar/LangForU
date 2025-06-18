@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    # Показва SQL заявките в конзолата, полезно за дебъгване
+    show-sql: true
+    hibernate:
+      # Hibernate ще създава и изтрива схемата на базата данни автоматично за всяко тестване
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        # ИЗРИЧНО КАЗВАМЕ НА HIBERNATE ДА ИЗПОЛЗВА H2 ДИАЛЕКТ ПО ВРЕМЕ НА ТЕСТ
+        dialect: org.hibernate.dialect.H2Dialect
+
+# Деактивираме DevTools в тестова среда, за да избегнем ненужни рестартирания
+spring.devtools.restart.enabled: false

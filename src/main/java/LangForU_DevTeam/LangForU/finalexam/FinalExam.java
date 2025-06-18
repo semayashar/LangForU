@@ -66,7 +66,7 @@ public class FinalExam {
      * Връзка тип "едно към едно". Управлява се от полето 'finalExam' в класа Course.
      */
     @OneToOne(mappedBy = "finalExam")
-    private Course course;
+    private Course course; // Тук не може да се сложи @NotNull, защото Course е собственик на връзката.
 
     /**
      * Списък с въпросите, включени в изпита.
@@ -76,6 +76,13 @@ public class FinalExam {
     @Size(min = 1, message = "Трябва да има поне едно изпитно упражнение.")
     @OneToMany(mappedBy = "finalExam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> examQuestions;
+
+    /**
+     * Списък с резултатите от изпита, свързани с този финален изпит.
+     * При изтриване на финалния изпит, свързаните резултати също ще бъдат изтрити.
+     */
+    @OneToMany(mappedBy = "finalExam", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExamResult> examResults = new ArrayList<>(); // Инициализиране по подразбиране
 
     /**
      * Темата за есе, което е част от изпита.
@@ -105,6 +112,7 @@ public class FinalExam {
             ex.setFinalExam(this);
         }
         this.essayTopic = essayTopic != null ? essayTopic : "Default Essay Theme";
+        this.examResults = new ArrayList<>(); // Инициализиране на новия списък
     }
 
     /**

@@ -1,11 +1,14 @@
 package LangForU_DevTeam.LangForU.contactRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -57,34 +60,27 @@ public class ContactController {
      * @param email            Имейлът на подателя от полето 'email'.
      * @param subject          Темата на съобщението от полето 'subject'.
      * @param message          Текстът на съобщението от полето 'message'.
-     * @param redirectAttributes Обект за добавяне на атрибути, които ще бъдат достъпни след пренасочване.
      * @return Пренасочване (redirect) към GET ендпойнта '/contact' със съответния параметър за успех или грешка.
      */
     @PostMapping("/contact")
-    public String submitContactRequest(
+    @ResponseBody
+    public ResponseEntity<String> submitContactRequest(
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("subject") String subject,
-            @RequestParam("message") String message,
-            RedirectAttributes redirectAttributes) {
+            @RequestParam("message") String message) {
 
-        // Проста валидация - проверява дали някое от полетата е празно.
-        if (name.isEmpty() || email.isEmpty() || subject.isEmpty() || message.isEmpty()) {
-            redirectAttributes.addAttribute("error", "true");
-            return "redirect:/contact";
+        if (name.isBlank() || email.isBlank() || subject.isBlank() || message.isBlank()) {
+            return ResponseEntity.badRequest().body("Полетата не могат да бъдат празни.");
         }
 
         try {
-            // Създава нов обект ContactRequest и го записва чрез сервиза.
-            ContactRequest contactRequest = new ContactRequest(name, email, subject, message);
-            contactRequestService.save(contactRequest);
-            // При успех, добавя 'success' атрибут към URL-а за пренасочване.
-            redirectAttributes.addAttribute("success", "true");
+            ContactRequest request = new ContactRequest(name, email, subject, message);
+            contactRequestService.save(request);
+            return ResponseEntity.ok("Успешно изпратено");
         } catch (Exception e) {
-            // При грешка по време на запис, добавя 'error' атрибут.
-            redirectAttributes.addAttribute("error", "true");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Възникна грешка.");
         }
-
-        return "redirect:/contact";
     }
 }

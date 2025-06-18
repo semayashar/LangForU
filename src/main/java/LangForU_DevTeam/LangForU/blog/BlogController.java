@@ -9,6 +9,8 @@ import LangForU_DevTeam.LangForU.like.Blog_Like_Service;
 import LangForU_DevTeam.LangForU.subscriber.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -258,19 +260,19 @@ public class BlogController {
     /**
      * Обработва абониране на потребител за блога.
      * @param email Имейлът на потребителя за абонамент.
-     * @param redirectAttributes Атрибути за съобщения след пренасочване.
      * @return Пренасочване към главната страница на блога.
      */
     @PostMapping("/subscribe")
-    public String subscribeToBlog(@RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ResponseEntity<String> subscribeToBlog(@RequestParam("email") String email) {
         boolean subscribed = subscriberService.subscribe(email);
         if (subscribed) {
-            redirectAttributes.addFlashAttribute("message", "Успешен абонамент!");
+            return ResponseEntity.ok("Успешен абонамент!");
         } else {
-            redirectAttributes.addFlashAttribute("error", "Вече сте абонирани!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Вече сте абонирани!");
         }
-        return "redirect:/blog";
     }
+
 
     /**
      * Обработва създаването на нова блог публикация (от администратор).

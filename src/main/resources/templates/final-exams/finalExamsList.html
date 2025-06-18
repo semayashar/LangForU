@@ -64,8 +64,9 @@
                             <td>
                                 <a class="btn btn-primary"
                                    th:href="@{/final-exams/view/{id}(id=${finalExam.id})}">Преглед</a>
-                                <a class="btn btn-danger" onclick="return confirm('Сигурни ли сте, че искате да изтриете този изпит?');"
-                                   th:href="@{/final-exams/delete/{id}(id=${finalExam.id})}">Изтрий</a>
+                                <form th:action="@{/final-exams/delete/{id}(id=${finalExam.id})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Изтрий</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>

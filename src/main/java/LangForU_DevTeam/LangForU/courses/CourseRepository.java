@@ -33,6 +33,15 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByFinalExamIsNull();
 
     /**
+     * Custom JPQL query to find all courses that do not have an associated final exam (finalExam is NULL).
+     * This is an alternative to findByFinalExamIsNull() if you prefer explicit JPQL.
+     *
+     * @return Списък ({@link List}) от курсове без финален изпит.
+     */
+    @Query("SELECT c FROM Course c WHERE c.finalExam IS NULL")
+    List<Course> findCoursesWithoutFinalExamJPQL();
+
+    /**
      * Намира "активни" курсове, използвайки Native SQL заявка, специфична за PostgreSQL.
      * Заявката намира курсове, за които текущата дата попада в разширен времеви прозорец:
      * от 2 седмици преди началната дата на курса до 2 седмици след крайната му дата.

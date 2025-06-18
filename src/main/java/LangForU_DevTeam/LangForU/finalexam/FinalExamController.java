@@ -29,6 +29,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -114,36 +115,92 @@ public class FinalExamController {
      */
     @GetMapping("/add")
     public String showAddFinalExamForm(Model model) {
-        model.addAttribute("finalExam", new FinalExam());
+        model.addAttribute("finalExam", new FinalExam()); // Този обект все още може да се използва за populating, но не и за @Valid
         model.addAttribute("courses", courseService.findCoursesWithoutFinalExam());
         return "final-exams/addFinalExam";
     }
 
     /**
      * Обработва създаването на нов финален изпит.
-     * @param finalExam Обект, създаден от данните във формата.
-     * @param bindingResult Обект за грешки от валидацията.
-     * @param examQuestions Въпросите за изпита, подадени като един низ в специфичен формат.
      * @param courseId ID на курса, към който се добавя изпитът.
+     * @param examQuestions Въпросите за изпита, подадени като един низ в специфичен формат.
      * @param essayTopic Темата за есе.
-     * @return Пренасочване към списъка с изпити при успех.
+     * @param model Модел за подаване на данни.
+     * @param redirectAttributes Атрибути за съобщения след пренасочване.
+     * @return Пренасочване към списъка с изпити при успех или обратно към формата при грешка.
      */
     @PostMapping("/add")
-    public String addFinalExam(@ModelAttribute @Valid FinalExam finalExam,
-                               BindingResult bindingResult,
+    public String addFinalExam(@RequestParam(value = "courseId", required = false) Long courseId, // Промяна: courseId вече не е част от @ModelAttribute finalExam
                                @RequestParam("examQuestions") String examQuestions,
-                               @RequestParam("courseId") Long courseId,
-                               @RequestParam("essayTopic") String essayTopic) {
-        if (bindingResult.hasErrors()) {
+                               @RequestParam("essayTopic") String essayTopic,
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
+
+        // Добавете курсовете към модела, за да се зареди правилно падащото меню, ако има грешки.
+        model.addAttribute("courses", courseService.findCoursesWithoutFinalExam());
+        model.addAttribute("finalExam", new FinalExam()); // Добавете празен FinalExam, ако формата е валидирана ръчно
+
+        // Ръчна валидация за courseId
+        if (courseId == null) {
+            model.addAttribute("courseError", "Моля, изберете курс.");
             return "final-exams/addFinalExam";
         }
+
         Course course = courseService.findCourseById(courseId);
-        finalExam.setCourse(course);
-        finalExam.setEssayTopic(essayTopic);
-        finalExamService.save(finalExam);
-        List<Question> questions = parseQuestions(examQuestions, finalExam);
-        questionRepository.saveAll(questions);
-        return "redirect:/final-exams/list";
+
+        if (course == null) {
+            model.addAttribute("courseError", "Избраният курс не е намерен.");
+            return "final-exams/addFinalExam";
+        }
+
+        // Ръчна валидация за examQuestions и essayTopic
+        if (examQuestions == null || examQuestions.trim().isEmpty() || !examQuestions.contains("---")) {
+            model.addAttribute("examQuestionsError", "Изпитните упражнения не могат да бъдат празни и трябва да следват правилния формат.");
+            return "final-exams/addFinalExam";
+        }
+
+        if (essayTopic == null || essayTopic.trim().isEmpty()) {
+            model.addAttribute("essayTopicError", "Темата за есе не може да бъде празна.");
+            return "final-exams/addFinalExam";
+        }
+
+
+        // Създайте нов FinalExam инстанция и я попълнете с данни
+        FinalExam examToSave = new FinalExam();
+        examToSave.setCourse(course);
+        examToSave.setEssayTopic(essayTopic);
+
+        // Задайте производни полета на базата на курса
+        examToSave.setName("Финален изпит: " + course.getLanguage());
+        examToSave.setExamDate(course.getEndDate());
+        examToSave.setDuration(120); // Продължителност по подразбиране
+
+        // Анализирайте въпросите и ги задайте на examToSave обекта
+        List<Question> questions = parseQuestions(examQuestions, examToSave);
+
+        // Проверка за празен списък с въпроси след парсване
+        if (questions.isEmpty()) {
+            model.addAttribute("examQuestionsError", "Не са открити валидни въпроси в подадения формат.");
+            return "final-exams/addFinalExam";
+        }
+        examToSave.setExamQuestions(questions);
+
+        // Сега запазете напълно попълнения `examToSave` обект.
+        // Това ще задейства JPA валидацията за всички @NotNull, @Size, @FutureOrPresent, @Min анотации върху FinalExam.
+        try {
+            finalExamService.save(examToSave);
+            // Ако записът е успешен, асоциирайте FinalExam с курса
+            course.setFinalExam(examToSave);
+            courseService.saveCourse(course); // Запазете курса, за да обновите final_exam_id
+            redirectAttributes.addFlashAttribute("successMessage", "Финалният изпит е добавен успешно!");
+        } catch (Exception e) {
+            System.err.println("Error saving final exam: " + e.getMessage());
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Възникна грешка при запазване на финалния изпит: " + e.getMessage());
+            return "final-exams/addFinalExam";
+        }
+
+        return "redirect:/final-exams/admin/view-all";
     }
 
     /**
@@ -164,7 +221,7 @@ public class FinalExamController {
             String correctAnswer = parts.length > 2 ? parts[2].trim() : "";
             List<String> possibleAnswers = !possibleAnswersPart.equals("***") ? Arrays.asList(possibleAnswersPart.split("=")) : null;
             Question createdQuestion = (possibleAnswers != null) ? new Question(questionText, possibleAnswers, correctAnswer) : new Question(questionText, correctAnswer);
-            createdQuestion.setFinalExam(finalExam);
+            createdQuestion.setFinalExam(finalExam); // Link question to the final exam
             questions.add(createdQuestion);
         }
         return questions;
@@ -176,15 +233,17 @@ public class FinalExamController {
      * @param redirectAttributes Атрибути за съобщения след пренасочване.
      * @return Пренасочване към административния списък с изпити.
      */
-    @GetMapping("/delete/{id}")
-    public String deleteFinalExamViaGet(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @PostMapping("/delete/{id}") // Change from @GetMapping to @PostMapping
+    public String deleteFinalExam(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             finalExamService.deleteFinalExamById(id);
             redirectAttributes.addFlashAttribute("successMessage", "Финалният изпит е изтрит успешно.");
         } catch (EntityNotFoundException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        } catch (Exception e) { // Catch broader exceptions for unexpected issues
+            redirectAttributes.addFlashAttribute("errorMessage", "Възникна грешка при изтриването на финалния изпит: " + e.getMessage());
         }
-        return "redirect:/admin/final-exams";
+        return "redirect:/admin/final-exams"; // Redirect to the admin list of final exams
     }
 
     /**

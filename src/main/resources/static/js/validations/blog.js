@@ -21,10 +21,15 @@ $(document).ready(function () {
                     cyrillicOnly: "Само на кирилица."
                 }
             },
-            errorPlacement: function (error, element) {
-                error.addClass("validation-message text-danger");
-                error.insertAfter(element);
-            },
+           errorPlacement: function (error, element) {
+               if (element.attr("name") === "query") {
+                   error.addClass("validation-message text-danger");
+                   $("#blogSearchErrorContainer").html(error); // поставя точно в контейнера
+               } else {
+                   error.addClass("validation-message text-danger");
+                   error.insertAfter(element);
+               }
+           },
             submitHandler: function (form) {
                 form.submit();
             }
@@ -55,13 +60,16 @@ $(document).ready(function () {
                     url: $(form).attr('action'),
                     data: formData,
                     success: function (response) {
-                        $('#successMessage').show();
+                        $('#successMessage').text(response).css("color", "green").show();
                         $('#newsletterForm')[0].reset();
                         $(".validation-message").hide();
                     },
-                    error: function () {
-                        $('#successMessage').hide();
-                        $(".validation-message").text("Произошла грешка. Моля, опитайте отново.").show();
+                    error: function (xhr) {
+                        let message = "Възникна грешка. Моля, опитайте отново.";
+                        if (xhr.status === 409) {
+                            message = xhr.responseText; // "Вече сте абонирани!"
+                        }
+                        $('#successMessage').text(message).css("color", "red").show();
                     }
                 });
                 return false;

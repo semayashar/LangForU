@@ -2,15 +2,22 @@ $(document).ready(function () {
     (function ($) {
         "use strict";
 
+        // Кирилица валидация
+        $.validator.addMethod("cyrillicOnly", function (value, element) {
+            return this.optional(element) || /^[\u0400-\u04FF\s]+$/.test(value);
+        }, "Моля, използвайте само кирилица.");
+
         $('#contactForm').validate({
             rules: {
                 name: {
                     required: true,
-                    minlength: 2
+                    minlength: 2,
+                    cyrillicOnly: true
                 },
                 subject: {
                     required: true,
-                    minlength: 4
+                    minlength: 4,
+                    cyrillicOnly: true
                 },
                 email: {
                     required: true,
@@ -23,24 +30,27 @@ $(document).ready(function () {
             },
             messages: {
                 name: {
-                    required: "Хайде, имаш име, нали?",
-                    minlength: "Името ти трябва да е поне 2 символа"
+                    required: "Моля, въведете име.",
+                    minlength: "Името трябва да е поне 2 символа.",
+                    cyrillicOnly: "Името трябва да е на кирилица."
                 },
                 subject: {
-                    required: "Хайде, имаш тема, нали?",
-                    minlength: "Темата трябва да е поне 4 символа"
+                    required: "Моля, въведете тема.",
+                    minlength: "Темата трябва да е поне 4 символа.",
+                    cyrillicOnly: "Темата трябва да е на кирилица."
                 },
                 email: {
-                    required: "Без имейл, без съобщение",
-                    email: "Моля, въведете валиден имейл"
+                    required: "Моля, въведете имейл.",
+                    email: "Въведете валиден имейл адрес."
                 },
                 message: {
-                    required: "Мм... да, трябва да напишеш нещо, за да изпратиш заявката.",
-                    minlength: "Това ли е всичко? Наистина?"
+                    required: "Моля, въведете съобщение.",
+                    minlength: "Съобщението трябва да е поне 20 символа."
                 }
             },
             submitHandler: function (form) {
                 const formData = $(form).serialize();
+                $(".alert").remove(); // премахва стари съобщения
 
                 $.ajax({
                     type: 'POST',
@@ -48,20 +58,18 @@ $(document).ready(function () {
                     data: formData,
                     success: function () {
                         $('#contactForm')[0].reset();
-                        $(".alert").remove();
-                        $('#contactForm').prepend(`
-                            <div class="alert alert-success" role="alert">
-                                Вашето съобщение е изпратено успешно!
-                            </div>
-                        `);
+                       $('#formMessages').html(`
+                           <div class="alert alert-success" role="alert" style="display:block; font-weight: bold;">
+                               Вашето съобщение е изпратено успешно!
+                           </div>
+                       `);
                     },
                     error: function () {
-                        $(".alert").remove();
-                        $('#contactForm').prepend(`
-                            <div class="alert alert-danger" role="alert">
-                                Възникна грешка при изпращането. Моля, опитайте отново!
-                            </div>
-                        `);
+                       $('#formMessages').html(`
+                           <div class="alert alert-danger" role="alert" style="display:block; font-weight: bold;">
+                               Възникна грешка при изпращането. Моля, опитайте отново!
+                           </div>
+                       `);
                     }
                 });
 

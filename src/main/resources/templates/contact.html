@@ -99,36 +99,22 @@
                         </h2>
                     </div>
                     <div class="col-lg-7">
-                        <form id="contactForm" method="post" novalidate="novalidate" th:action="@{/contact}">
+                        <form id="contactForm" method="post" novalidate th:action="@{/contact}">
                             <div class="form-group">
-                                <input class="form-control" id="name" name="name" placeholder="Въведете вашето име"
-                                       required type="text"/>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" id="email" name="email" placeholder="Имейл" required
-                                       type="email"/>
+                                <input class="form-control" id="name" name="name" placeholder="Въведете вашето име" type="text" />
                             </div>
                             <div class="form-group">
-                                <input class="form-control" id="subject" name="subject" placeholder="Въведете тема"
-                                       required type="text"/>
+                                <input class="form-control" id="email" name="email" placeholder="Имейл" type="email" />
                             </div>
                             <div class="form-group">
-                            <textarea class="form-control w-100" cols="30" id="message" name="message"
-                                      placeholder="Въведете съобщение" required rows="9"></textarea>
+                                <input class="form-control" id="subject" name="subject" placeholder="Въведете тема" type="text" />
                             </div>
-
-                            <!-- Success/Error Messages -->
-                            <div th:if="${successMessage}">
-                                <div class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+                            <div class="form-group">
+                                <textarea class="form-control w-100" id="message" name="message" placeholder="Въведете съобщение" rows="9"></textarea>
                             </div>
-                            <div th:if="${errorMessage}">
-                                <div class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
-                            </div>
-
+                            <div id="formMessages"></div>
                             <div class="form-group mt-3">
-                                <button class="button button-contactForm boxed-btn" type="submit">
-                                    Изпратете
-                                </button>
+                                <button class="button button-contactForm boxed-btn" type="submit">Изпратете</button>
                             </div>
                         </form>
                     </div>
