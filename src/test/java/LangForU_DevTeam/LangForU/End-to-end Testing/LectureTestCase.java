@@ -1,181 +1,203 @@
 package com.example;
 
-import java.time.Duration;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.fail;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DisplayName("Lecture Management End-to-End Test")
 class LectureTestCase {
-    private WebDriver driver;
-    private String baseUrl;
-    private boolean acceptNextAlert = true;
-    private StringBuffer verificationErrors = new StringBuffer();
-    JavascriptExecutor js;
+
+    private static WebDriver driver;
+    private static WebDriverWait wait;
+
+    // --- Configuration ---
+    private static final String BASE_URL = "http://localhost:8080";
+    private static final String ADMIN_EMAIL = "langforu.softdev@gmail.com";
+    private static final String ADMIN_PASSWORD = "Admin123";
+    // Use a static, unique name to ensure the tests can find the correct lecture to edit and delete.
+    private static final String LECTURE_NAME = "Automated Test Lecture - " + System.currentTimeMillis();
+
+    @BeforeAll
+    static void setupClass() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        // Set up the explicit wait once. It can be reused throughout the tests.
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.manage().window().maximize();
+    }
 
     @BeforeEach
-    public void setUp() throws Exception {
-       WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        baseUrl = "https://www.google.com/";
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-        js = (JavascriptExecutor) driver;
+    void setUp() {
+        driver.get(BASE_URL);
+        // Login before each test to ensure a consistent state
+        loginAsAdmin();
     }
 
     @Test
     @Order(1)
-    public void testLectionAdd() throws Exception {
-        driver.get("http://localhost:8080/index");
-        driver.findElement(By.linkText("Вход")).click();
-        driver.get("http://localhost:8080/login");
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("langforu.softdev@gmail.com");
-        driver.findElement(By.id("password")).clear();
-        driver.findElement(By.id("password")).sendKeys("Admin123");
-        driver.findElement(By.id("loginForm")).submit();
-        driver.get("http://localhost:8080/profile");
-        driver.findElement(By.linkText("Добави")).click();
-        driver.get("http://localhost:8080/admin/dashboard");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.xpath("//a[@id='add-lection']/div")).click();
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.get("http://localhost:8080/lections/add");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.id("name")).clear();
-        driver.findElement(By.id("name")).sendKeys("Английски език - Основни правила за изразяване и комуникация (A1)");
-        driver.findElement(By.id("theme")).clear();
-        driver.findElement(By.id("theme")).sendKeys("Основни изрази и структура на изречения за ежедневна комуникация");
-        driver.findElement(By.id("videoUrl")).clear();
-        driver.findElement(By.id("videoUrl")).sendKeys("https://www.youtube.com/watch?v=2WKJYekTKBQ");
-        driver.findElement(By.id("difficultyLevel")).clear();
-        driver.findElement(By.id("difficultyLevel")).sendKeys("A1 (начинаещи)");
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[5]/div/span")).click();
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[5]/div/ul/li[2]")).click();
-        driver.findElement(By.id("releaseDate")).click();
-        driver.findElement(By.linkText("12")).click();
-        driver.findElement(By.id("instructor")).clear();
-        driver.findElement(By.id("instructor")).sendKeys("Мария Георгиева");
-        driver.findElement(By.id("additionalResources")).clear();
-        driver.findElement(By.id("additionalResources")).sendKeys("Урок 2: Основи на граматиката - Времена и правилна структура на изреченията\nУпражнения за основи на изразяване и говорене");
-        driver.findElement(By.id("summary")).clear();
-        driver.findElement(By.id("summary")).sendKeys("В този урок ще научим основни правила за изразяване и изграждане на кратки изречения на английски език...");
-        driver.findElement(By.id("exercisesText")).clear();
-        driver.findElement(By.id("exercisesText")).sendKeys("Какъв филм гледахте миналия месец?---комедия=трилър=драма---драма;\nПътувахте ли някъде това лято?---да=не---не;\n...");
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[12]/button")).click();
-        driver.get("http://localhost:8080/admin/lections");
-        driver.findElement(By.id("logout-button")).click();
-        driver.get("http://localhost:8080/login?logout=true");
+    @DisplayName("Should add a new lecture")
+    void testAddLecture() {
+        // Navigate to the "Add Lection" form
+        waitForElement(By.linkText("Добави")).click();
+        waitForElement(By.id("add-lection")).click();
+
+        // --- Fill out the form ---
+        type(By.id("name"), LECTURE_NAME);
+        type(By.id("theme"), "Automated Test Theme");
+        type(By.id("videoUrl"), "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        type(By.id("difficultyLevel"), "A1 (Beginner)");
+
+        // Select language from dropdown
+        waitForElement(By.xpath("//form[@id='lectionForm']/div[5]/div/span")).click();
+        waitForElement(By.xpath("//form[@id='lectionForm']/div[5]/div/ul/li[2]")).click(); // Select English
+
+        // Select date from calendar
+        waitForElement(By.id("releaseDate")).click();
+        waitForElement(By.linkText("12")).click();
+
+        type(By.id("instructor"), "Test Instructor");
+        type(By.id("additionalResources"), "Automated test resources.");
+        type(By.id("summary"), "Automated test summary.");
+        type(By.id("exercisesText"), "Automated test exercises.");
+
+        // Submit the form
+        waitForElement(By.xpath("//form[@id='lectionForm']/div[12]/button")).click();
+
+        // --- Verification ---
+        driver.get(BASE_URL + "/admin/lections");
+        boolean isPresent = isElementPresentWithWait(By.xpath(String.format("//td[text()='%s']", LECTURE_NAME)));
+        assertTrue(isPresent, "Lecture should be present in the list after creation.");
     }
 
     @Test
     @Order(2)
-    public void testUpdateLecture() throws InterruptedException {
-        driver.get("http://localhost:8080/index");
-        driver.findElement(By.linkText("Вход")).click();
-        driver.get("http://localhost:8080/login");
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("langforu.softdev@gmail.com");
-        driver.findElement(By.id("password")).clear();
-        driver.findElement(By.id("password")).sendKeys("Admin123");
-        driver.findElement(By.id("loginForm")).submit();
-        driver.get("http://localhost:8080/profile");
-        driver.findElement(By.linkText("Добави")).click();
-        driver.get("http://localhost:8080/admin/dashboard");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.xpath("//a[@id='add-lection']/div")).click();
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.get("http://localhost:8080/lections/add");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.id("name")).clear();
-        driver.findElement(By.id("name")).sendKeys("Английски език - Основни правила за изразяване и комуникация (A1)");
-        driver.findElement(By.id("theme")).clear();
-        driver.findElement(By.id("theme")).sendKeys("Основни изрази и структура на изречения за ежедневна комуникация");
-        driver.findElement(By.id("videoUrl")).clear();
-        driver.findElement(By.id("videoUrl")).sendKeys("https://www.youtube.com/watch?v=2WKJYekTKBQ");
-        driver.findElement(By.id("difficultyLevel")).clear();
-        driver.findElement(By.id("difficultyLevel")).sendKeys("A1 (начинаещи)");
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[5]/div/span")).click();
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[5]/div/ul/li[2]")).click();
-        driver.findElement(By.id("releaseDate")).click();
-        driver.findElement(By.linkText("12")).click();
-        driver.findElement(By.id("instructor")).clear();
-        driver.findElement(By.id("instructor")).sendKeys("Мария Георгиева");
-        driver.findElement(By.id("additionalResources")).clear();
-        driver.findElement(By.id("additionalResources")).sendKeys("Урок 2: Основи на граматиката - Времена и правилна структура на изреченията\nУпражнения за основи на изразяване и говорене");
-        driver.findElement(By.id("summary")).clear();
-        driver.findElement(By.id("summary")).sendKeys("В този урок ще научим основни правила за изразяване и изграждане на кратки изречения на английски език. Ще се фокусираме върху ключови граматични правила за поставяне на глаголи, употреба на съществителни и прилагателни, както и общи фрази за ежедневна комуникация.");
-        driver.findElement(By.id("exercisesText")).clear();
-        driver.findElement(By.id("exercisesText")).sendKeys("Какъв филм гледахте миналия месец?---комедия=трилър=драма---драма;\nПътувахте ли някъде това лято?---да=не---не;\nПътувахте ли някъде тази зима?---***---не;\n;;;");
-        driver.findElement(By.xpath("//form[@id='lectionForm']/div[12]/button")).click();
-        driver.get("http://localhost:8080/admin/lections");
-        driver.findElement(By.id("logout-button")).click();
-        driver.get("http://localhost:8080/login?logout=true");
+    @DisplayName("Should update an existing lecture")
+    void testUpdateLecture() {
+        driver.get(BASE_URL + "/admin/lections");
+
+        // Find the row for our specific lecture and click "Edit"
+        WebElement lectureRow = findLectionRow(LECTURE_NAME);
+        lectureRow.findElement(By.linkText("Редактиране")).click();
+
+        // Update a field
+        final String updatedSummary = "This summary has been updated by an automated test.";
+        type(By.id("summary"), updatedSummary);
+
+        // Save the changes
+        waitForElement(By.xpath("//button[normalize-space()='Save Lection']")).click();
+
+        // --- Verification ---
+        driver.get(BASE_URL + "/admin/lections");
+        // Re-navigate to the view/details page to verify the change
+        findLectionRow(LECTURE_NAME).findElement(By.linkText("Преглед")).click();
+        String bodyText = waitForElement(By.tagName("body")).getText();
+        assertTrue(bodyText.contains(updatedSummary), "The updated summary should be visible on the lecture view page.");
     }
 
     @Test
     @Order(3)
-    public void testDeleteLecture() throws InterruptedException {
-        driver.get("http://localhost:8080/login?logout=true");
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("langforu.softdev@gmail.com");
-        driver.findElement(By.id("password")).clear();
-        driver.findElement(By.id("password")).sendKeys("Admin123");
-        driver.findElement(By.id("loginForm")).submit();
-        driver.get("http://localhost:8080/profile");
-        driver.findElement(By.linkText("Таблици")).click();
-        driver.get("http://localhost:8080/admin/dashboard");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.id("lections")).click();
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.get("http://localhost:8080/admin/lections");
-        Thread.sleep(3000); // Waits for 3000 milliseconds (3 seconds)
-        driver.findElement(By.linkText("Изтриване")).click();
-        driver.findElement(By.id("logout-button")).click();
-        driver.get("http://localhost:8080/login?logout=true");
-    }
+    @DisplayName("Should delete a lecture")
+    void testDeleteLecture() {
+        driver.get(BASE_URL + "/admin/lections");
 
-    private boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
+        // Find the specific lecture and click "Delete"
+        WebElement lectureRow = findLectionRow(LECTURE_NAME);
+        lectureRow.findElement(By.linkText("Изтриване")).click();
 
-    private boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
+        // Optional: If there is a javascript confirmation pop-up, you would accept it.
+        // wait.until(ExpectedConditions.alertIsPresent()).accept();
 
-    private String closeAlertAndGetItsText() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            String alertText = alert.getText();
-            if (acceptNextAlert) {
-                alert.accept();
-            } else {
-                alert.dismiss();
-            }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
-        }
+        // --- Verification ---
+        // Refresh the page and verify the lecture is gone
+        driver.navigate().refresh();
+        boolean isPresent = isElementPresentWithWait(By.xpath(String.format("//td[text()='%s']", LECTURE_NAME)));
+        assertFalse(isPresent, "Lecture should NOT be present in the list after deletion.");
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
+    void tearDown() {
+        // Logout after each test
+        if (isElementPresentWithWait(By.id("logout-button"))) {
+            waitForElement(By.id("logout-button")).click();
         }
+    }
+
+    @AfterAll
+    static void tearDownClass() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    // --- Private Helper Methods ---
+
+    /**
+     * Logs in the administrator using predefined credentials.
+     */
+    private void loginAsAdmin() {
+        waitForElement(By.linkText("Вход")).click();
+        type(By.id("email"), ADMIN_EMAIL);
+        type(By.id("password"), ADMIN_PASSWORD);
+        waitForElement(By.id("loginForm")).submit();
+        // Verify login was successful by checking for the profile link
+        assertTrue(isElementPresentWithWait(By.linkText("Профил")), "Login failed, 'Профил' link not found.");
+    }
+
+    /**
+     * A robust helper to find an element, waiting for it to be clickable.
+     * @param locator The By locator of the element.
+     * @return The found WebElement.
+     */
+    private WebElement waitForElement(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    /**
+     * A helper to safely clear an input field and type text into it.
+     * @param locator The By locator of the input field.
+     * @param text The text to type.
+     */
+    private void type(By locator, String text) {
+        WebElement element = waitForElement(locator);
+        element.clear();
+        element.sendKeys(text);
+    }
+
+    /**
+     * Checks if an element is present on the page, waiting for a short period.
+     * Useful for assertions where an element should (or should not) exist.
+     * @param locator The By locator of the element.
+     * @return True if the element is found, false otherwise.
+     */
+    private boolean isElementPresentWithWait(By locator) {
+        try {
+            // Use a shorter, temporary wait to quickly check for presence
+            new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .until(ExpectedConditions.presenceOfElementLocated(locator));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Finds the table row (tr) corresponding to a given lecture name.
+     * @param lectureName The name of the lecture to find.
+     * @return The WebElement for the entire table row.
+     */
+    private WebElement findLectionRow(String lectureName) {
+        By locator = By.xpath(String.format("//td[text()='%s']/parent::tr", lectureName));
+        return waitForElement(locator);
     }
 }
