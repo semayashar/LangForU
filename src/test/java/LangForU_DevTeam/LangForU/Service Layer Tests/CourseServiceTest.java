@@ -144,14 +144,16 @@ class CourseServiceTest {
     @Test
     void findCoursesWithoutFinalExam_whenCalled_shouldInvokeRepositoryMethod() {
         // Arrange
-        when(courseRepository.findByFinalExamIsNull()).thenReturn(List.of(testCourse)); //
+        // ПОПРАВКА: Конфигурираме мока за правилния метод
+        when(courseRepository.findCoursesWithoutFinalExamJPQL()).thenReturn(List.of(testCourse));
 
         // Act
-        List<Course> courses = courseService.findCoursesWithoutFinalExam(); //
+        List<Course> courses = courseService.findCoursesWithoutFinalExam();
 
         // Assert
         assertNotNull(courses);
         assertEquals(1, courses.size());
-        verify(courseRepository).findCoursesWithoutFinalExamJPQL(); //
+        // ПОПРАВКА: Проверяваме извикването на правилния метод
+        verify(courseRepository).findCoursesWithoutFinalExamJPQL();
     }
 }
