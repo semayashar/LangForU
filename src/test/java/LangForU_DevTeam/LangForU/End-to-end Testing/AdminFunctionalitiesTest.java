@@ -1,6 +1,8 @@
 package com.example;
 
 import java.time.Duration;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.openqa.selenium.*;
@@ -17,7 +19,7 @@ class AdminFunctionalitiesTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "C:\\Chrome\\chromedriver-win64\\chromedriver.exe");
+       WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

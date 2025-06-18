@@ -1,6 +1,8 @@
 package com.example;
 
 import java.time.Duration;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.openqa.selenium.*;
@@ -16,7 +18,7 @@ class BlogTestCase {
 
     @BeforeEach
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "C:\\Chrome\\chromedriver-win64\\chromedriver.exe");
+       WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));

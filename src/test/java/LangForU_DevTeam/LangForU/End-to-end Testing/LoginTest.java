@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,8 +20,7 @@ public class LoginTest {
     @BeforeAll
     public static void setUp() {
         // Set the path to your WebDriver executable
-        System.setProperty("webdriver.chrome.driver", "C:\\Chrome\\chromedriver-win64\\chromedriver.exe");
-
+        WebDriverManager.chromedriver().setup();
         // Configure ChromeOptions without headless mode
         ChromeOptions options = new ChromeOptions();
         // options.addArguments("--headless"); // Uncomment for headless mode

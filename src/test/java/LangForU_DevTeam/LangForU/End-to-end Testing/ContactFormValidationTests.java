@@ -1,3 +1,4 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ public class ContactFormValidationTests {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Chrome\\chromedriver-win64\\chromedriver.exe");
+       WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);

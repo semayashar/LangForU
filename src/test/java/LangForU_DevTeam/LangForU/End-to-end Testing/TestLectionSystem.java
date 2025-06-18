@@ -1,5 +1,6 @@
 package com.example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,12 +17,11 @@ public class TestLectionSystem {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private static final String DRIVER_PATH = "C:\\Chrome\\chromedriver-win64\\chromedriver.exe";
     private static final String BASE_URL = "http://localhost:8080";
 
     @BeforeAll
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", DRIVER_PATH);
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
