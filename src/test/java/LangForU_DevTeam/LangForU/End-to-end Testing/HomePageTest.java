@@ -166,14 +166,12 @@ public class HomePageTest {
     @Test
     public void testHeroButtonRedirectionIfAuthenticated() {
 
-        // Navigate to the home page
+        // Navigate to the login page
         driver.get("http://localhost:8080/login");
 
-        // Wait until the page title contains the expected text or the page loads
-        wait.until(ExpectedConditions.titleContains("LangForU | Влез"));
-
-        // Ensure the correct URL
-        assertEquals("http://localhost:8080/login", driver.getCurrentUrl());
+        // Wait until the page title contains the expected text and the URL is correct
+        wait.until(ExpectedConditions.titleContains("LangForU | Влез в профил"));
+        wait.until(ExpectedConditions.urlToBe("http://localhost:8080/login"));
 
         driver.findElement(By.id("email")).sendKeys("semayasharova@gmail.com");
         driver.findElement(By.id("password")).sendKeys("Sema1234");
@@ -184,7 +182,8 @@ public class HomePageTest {
         // Click the submit button
         submitButton.click();
 
-        // Ensure the redirect to the login page
+        // **КОРЕКЦИЯ:** Wait for the redirection to the profile page before asserting the URL
+        wait.until(ExpectedConditions.urlToBe("http://localhost:8080/profile"));
         assertEquals("http://localhost:8080/profile", driver.getCurrentUrl());
 
         // Navigate to the home page
@@ -205,6 +204,9 @@ public class HomePageTest {
         // Logout
         WebElement logoutButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout-button")));
         logoutButton.click();
+
+        // Wait for successful logout (e.g., redirection to home page)
+        wait.until(ExpectedConditions.urlToBe("http://localhost:8080/"));
     }
 
     @AfterAll
