@@ -144,14 +144,14 @@ class CourseServiceTest {
     @Test
     void findCoursesWithoutFinalExam_whenCalled_shouldInvokeRepositoryMethod() {
         // Arrange
-        when(courseRepository.findByFinalExamIsNull()).thenReturn(List.of(testCourse));
+        when(courseRepository.findByFinalExamIsNull()).thenReturn(List.of(testCourse)); //
 
         // Act
-        List<Course> courses = courseService.findCoursesWithoutFinalExam();
+        List<Course> courses = courseService.findCoursesWithoutFinalExam(); //
 
         // Assert
         assertNotNull(courses);
         assertEquals(1, courses.size());
-        verify(courseRepository).findByFinalExamIsNull();
+        verify(courseRepository).findCoursesWithoutFinalExamJPQL(); //
     }
 }

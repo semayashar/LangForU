@@ -73,7 +73,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
      * Използва се Native SQL заявка.
      * @return Списък от масиви Object[], където всеки масив съдържа [име на категория, брой публикации].
      */
-    @Query(value = "SELECT bc.categories, COUNT(b) FROM blog b JOIN blog_categories bc ON b.id = bc.blog_id GROUP BY bc.categories ORDER BY COUNT(b) DESC LIMIT 6", nativeQuery = true)
+    @Query(value = "SELECT bc.categories, COUNT(b.id) FROM blog b JOIN blog_categories bc ON b.id = bc.blog_id GROUP BY bc.categories ORDER BY COUNT(b.id) DESC LIMIT 6", nativeQuery = true)
     List<Object[]> findTop5Categories();
 
     /**
@@ -81,7 +81,7 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
      * Използва се Native SQL заявка.
      * @return Списък от масиви Object[], където всеки масив съдържа [име на таг, брой публикации].
      */
-    @Query(value = "SELECT bt.tags, COUNT(b) FROM blog b JOIN blog_tags bt ON b.id = bt.blog_id GROUP BY bt.tags ORDER BY COUNT(b) DESC LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT bt.tags, COUNT(b.id) FROM blog b JOIN blog_tags bt ON b.id = bt.blog_id GROUP BY bt.tags ORDER BY COUNT(b.id) DESC LIMIT 10", nativeQuery = true)
     List<Object[]> findTop5Tags();
 
 }

@@ -4,6 +4,7 @@ import LangForU_DevTeam.LangForU.appuser.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -39,19 +40,37 @@ public class WebSecurityConfig {
                 // Конфигурация на CSRF (Cross-Site Request Forgery) защита.
                 .csrf(csrf -> csrf
                         // Изключва CSRF защитата за определени пътища, които може да се извикват от външни клиенти или AJAX.
-                        .ignoringRequestMatchers("/blog/subscribe", "/chat", "/chat/**", "/avatar/save-avatar")
+                        .ignoringRequestMatchers("/blog/subscribe", "/chat", "/chat/**", "/avatar/save-avatar", "/lections/submit")
                 )
                 // Конфигурация на правилата за оторизация (достъп до URL).
                 .authorizeHttpRequests(authz -> authz
-                        // Позволява публичен достъп (без нужда от логване) до изброените пътища.
+                        // --- Позволява публичен достъп (без нужда от логване) до изброените пътища. ---
                         .requestMatchers(
                                 "/", "/index", "/courses", "/about", "/Sevi", "/terms", "/blog", "/blog/**", "/search", "/tag",
                                 "/tag/**", "/blog/subscribe", "/category/**", "/contact", "/login", "/register",
                                 "/courses/view/**", "/registration/confirm", "/confirmedRegistration",
-                                "/registrationSuccess", "/admin/confirmAdmin/**", "/chat", "/chat/send")
+                                "/registrationSuccess", "/admin/confirmAdmin/**", // <-- Преместено тук
+                                "/chat", "/chat/send")
                         .permitAll()
-                        // КРИТИЧНА ПРОМЯНА: Изисква потребителят да има роля 'ADMIN' за достъп до /admin/ пътищата.
+
+                        // --- Изисква потребителят да има роля 'ADMIN' за достъп до всички пътища, които започват с /admin/. ---
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Добавени специфични правила за изтриване/модифициране на курсове и лекции,
+                        // които трябва да бъдат достъпни само за администратори и да използват POST заявки.
+                        .requestMatchers(HttpMethod.POST, "/courses/delete/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/lections/delete/**").hasRole("ADMIN")
+
+                        // --- Достъп за логнати потребители (USER или ADMIN) ---
+                        .requestMatchers(
+                                "/profile", "/avatar/**",
+                                "/blog/*/like", "/blog/*/comment",
+                                "/courses/signup/**", "/courses/requests",
+                                "/lections/view/**", // view lection is for all authenticated users
+                                "/final-exams/view/**", "/final-exams/submit/**", "/final-exams/*/certificate",
+                                "/Sevi/chat" // chat access is for authenticated users
+                        ).authenticated()
+
                         // Позволява публичен достъп до статични ресурси (CSS, JS, изображения и др.).
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/fonts/**", "/scss/**").permitAll()
                         // Всички останали заявки, които не са описани по-горе, изискват автентикация.

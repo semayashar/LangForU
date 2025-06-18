@@ -60,6 +60,8 @@ public class ConfirmationTokenRepositoryTest {
 
         // when
         confirmationTokenRepository.updateConfirmedAt(tokenValue, LocalDateTime.now());
+        entityManager.clear(); // Add this line to clear the persistence context cache
+
         Optional<ConfirmationToken> updatedToken = confirmationTokenRepository.findByToken(tokenValue);
 
         // then
